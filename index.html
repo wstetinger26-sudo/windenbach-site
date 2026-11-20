@@ -489,6 +489,21 @@ html.dlg-open{overflow:hidden}
 .offer .save b,.pprice .sv,.dlg-price .sv{display:inline-block;animation:breathe 3.2s ease-in-out infinite;transform-origin:right center}
 .pprice .sv,.dlg-price .sv{transform-origin:center}
 .offer .save b{display:block}
+/* language switcher */
+.lang{display:flex;gap:2px;border:1px solid var(--line);border-radius:99px;padding:3px;margin-right:12px}
+.lang button{background:none;border:0;color:var(--muted);font:700 12px Manrope,sans-serif;letter-spacing:.06em;padding:6px 9px;border-radius:99px;cursor:pointer}
+.lang button.on{background:var(--goldg);color:#1A1406}
+.lang button:hover:not(.on){color:var(--gold2)}
+@media(max-width:560px){.hdr-cta{display:none!important}.lang{margin-right:0}}
+/* clock */
+.clocksec{padding:90px 0;background:radial-gradient(600px 380px at 20% 50%,rgba(212,175,55,.08),transparent 70%)}
+.clockgrid{display:grid;grid-template-columns:320px 1fr;gap:60px;align-items:center}
+.clockface svg{width:100%;height:auto;filter:drop-shadow(0 24px 50px rgba(0,0,0,.6))}
+#cs{transition:transform .25s cubic-bezier(.4,2.2,.6,1)}
+.clocktext .btn{margin-top:8px}
+.ccount{margin:6px 0 18px;color:var(--muted);font-size:15px}
+.ccount b{display:block;font-family:Manrope,sans-serif;font-variant-numeric:tabular-nums;font-size:clamp(26px,4vw,40px);font-weight:700;background:var(--goldg);-webkit-background-clip:text;background-clip:text;color:transparent;margin-top:4px}
+@media(max-width:860px){.clockgrid{grid-template-columns:1fr;gap:30px;text-align:center}.clockface{max-width:240px;margin:0 auto}.clocktext .lead{margin-left:auto;margin-right:auto}}
 /* poster */
 .poster{background:var(--bg)!important}
 .poster::before{background:radial-gradient(560px 380px at 85% 20%,rgba(212,175,55,.10),transparent 70%)}
@@ -512,15 +527,16 @@ html.dlg-open{overflow:hidden}
 
 <header>
   <div class="wrap nav">
-    <a href="#top" class="brand"><svg class="logo-b" viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4DE97"/><stop offset=".35" stop-color="#E2C060"/><stop offset=".6" stop-color="#D2AA42"/><stop offset="1" stop-color="#B98F30"/></linearGradient></defs><path d="M36.1 152.7 A 78 78 0 1 1 148.0 46.5" fill="none" stroke="url(#lg)" stroke-width="7" stroke-dasharray="2 16" stroke-linecap="round"/><path d="M168.9 71.4 A 78 78 0 0 1 163.9 152.7" fill="none" stroke="url(#lg)" stroke-width="7" stroke-dasharray="2 16" stroke-linecap="round"/><g transform="translate(159.8 57.9) rotate(140) scale(1.05) translate(-12 -12)"><path fill="url(#lg)" d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></g><text x="100" y="146" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-weight="700" font-size="118" fill="url(#lg)">В</text></svg>Владимир Винденбах</a>
+    <a data-i18n="t001" href="#top" class="brand"><svg class="logo-b" viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4DE97"/><stop offset=".35" stop-color="#E2C060"/><stop offset=".6" stop-color="#D2AA42"/><stop offset="1" stop-color="#B98F30"/></linearGradient></defs><path d="M36.1 152.7 A 78 78 0 1 1 148.0 46.5" fill="none" stroke="url(#lg)" stroke-width="7" stroke-dasharray="2 16" stroke-linecap="round"/><path d="M168.9 71.4 A 78 78 0 0 1 163.9 152.7" fill="none" stroke="url(#lg)" stroke-width="7" stroke-dasharray="2 16" stroke-linecap="round"/><g transform="translate(159.8 57.9) rotate(140) scale(1.05) translate(-12 -12)"><path fill="url(#lg)" d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></g><text x="100" y="146" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-weight="700" font-size="118" fill="url(#lg)">В</text></svg>Владимир Винденбах</a>
     <nav class="menu">
-      <a href="#about">Обо мне</a>
-      <a href="#club">Клуб</a>
-      <a href="#start">Как начать</a>
-      <a href="#book">Книга</a>
-      <a href="#faq">Вопросы</a>
+      <a data-i18n="t002" href="#about">Обо мне</a>
+      <a data-i18n="t003" href="#club">Клуб</a>
+      <a data-i18n="t004" href="#start">Как начать</a>
+      <a data-i18n="t005" href="#book">Книга</a>
+      <a data-i18n="t006" href="#faq">Вопросы</a>
     </nav>
-    <a class="btn btn-gold" href="https://ig.me/m/wladimirwindenbach" target="_blank" rel="noopener">Написать мне</a>
+    <div class="lang" role="group" aria-label="Язык / Sprache / Language"><button type="button" data-lang="ru">RU</button><button type="button" data-lang="de">DE</button><button type="button" data-lang="en">EN</button></div>
+    <a data-i18n="t007" class="btn btn-gold hdr-cta" href="https://ig.me/m/wladimirwindenbach" target="_blank" rel="noopener">Написать мне</a>
   </div>
 </header>
 
@@ -533,33 +549,33 @@ html.dlg-open{overflow:hidden}
   </svg>
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow">Время пришло</div>
-      <h1>Жить там, где хочется, <em>и путешествовать чаще</em></h1>
-      <p>Меня зовут Владимир. Тридцать лет я прожил в Германии, с 2017 года у меня была своя фирма. В 2026 году я её закрыл и переехал с семьёй в Италию. Здесь я рассказываю, как теперь живу и как устроен клуб путешественников, в котором я состою.</p>
+      <div data-i18n="t008" class="eyebrow">Время пришло</div>
+      <h1 data-i18n="t009">Жить там, где хочется, <em>и путешествовать чаще</em></h1>
+      <p data-i18n="t010">Меня зовут Владимир. Тридцать лет я прожил в Германии, с 2017 года у меня была своя фирма. В 2026 году я её закрыл и переехал с семьёй в Италию. Здесь я рассказываю, как теперь живу и как устроен клуб путешественников, в котором я состою.</p>
       <div class="row">
-        <a class="btn btn-gold" href="https://ig.me/m/wladimirwindenbach" target="_blank" rel="noopener">Написать «РАЗГОВОР»</a>
-        <a class="btn btn-line" href="#book">Читать мою книгу</a>
+        <a data-i18n="t011" class="btn btn-gold" href="https://ig.me/m/wladimirwindenbach" target="_blank" rel="noopener">Написать «РАЗГОВОР»</a>
+        <a data-i18n="t012" class="btn btn-line" href="#book">Читать мою книгу</a>
       </div>
       <div class="chips">
-        <span class="chip">Предприниматель с 2017 года</span>
-        <span class="chip">Без давления</span>
-        <span class="chip">Из любой страны</span>
+        <span data-i18n="t013" class="chip">Предприниматель с 2017 года</span>
+        <span data-i18n="t014" class="chip">Без давления</span>
+        <span data-i18n="t015" class="chip">Из любой страны</span>
       </div>
     </div>
     <div class="hero-photo rv rv-r">
       <div class="ph"><img src="img/portrait_abend.jpg" alt="Владимир Винденбах" style="object-position:50% 20%"></div>
-      <div class="tag"><b>Владимир Винденбах</b>предприниматель · Италия</div>
+      <div data-i18n="t016" class="tag"><b>Владимир Винденбах</b>предприниматель · Италия</div>
       <div class="pass" aria-hidden="true">
-        <div class="top"><span>ПОСАДОЧНЫЙ ТАЛОН</span><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg></div>
-        <div class="route"><div><small>Откуда</small><b>Привычная<br>жизнь</b></div><div class="mid"><svg style="transform:rotate(90deg)" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg></div><div style="text-align:right"><small>Куда</small><b>Жизнь<br>по-своему</b></div></div>
-        <div class="grid"><div><small>Пассажир</small><span>Вы</span></div><div><small>Посадка</small><span>РАЗГОВОР</span></div><div><small>Багаж</small><span>телефон</span></div><div><small>Выход</small><span>Instagram</span></div></div>
+        <div class="top"><span data-i18n="t017">ПОСАДОЧНЫЙ ТАЛОН</span><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg></div>
+        <div class="route"><div><small data-i18n="t018">Откуда</small><b data-i18n="t019">Привычная<br>жизнь</b></div><div class="mid"><svg style="transform:rotate(90deg)" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg></div><div style="text-align:right"><small data-i18n="t020">Куда</small><b data-i18n="t021">Жизнь<br>по-своему</b></div></div>
+        <div class="grid"><div><small data-i18n="t022">Пассажир</small><span data-i18n="t023">Вы</span></div><div><small data-i18n="t024">Посадка</small><span data-i18n="t025">РАЗГОВОР</span></div><div><small data-i18n="t026">Багаж</small><span data-i18n="t027">телефон</span></div><div><small data-i18n="t028">Выход</small><span data-i18n="t029">Instagram</span></div></div>
         <div class="bar"></div>
       </div>
     </div>
   </div>
 </section>
 
-<div class="ticker" aria-hidden="true"><div class="t"><span>Время пришло</span><i>✈</i><span>Свобода выбора</span><i>✈</i><span>Путешествия</span><i>✈</i><span>Люди рядом</span><i>✈</i><span>Италия</span><i>✈</i><span>Новая глава</span><i>✈</i><span>Разговор</span><i>✈</i><span>Время пришло</span><i>✈</i><span>Свобода выбора</span><i>✈</i><span>Путешествия</span><i>✈</i><span>Люди рядом</span><i>✈</i><span>Италия</span><i>✈</i><span>Новая глава</span><i>✈</i><span>Разговор</span><i>✈</i></div></div>
+<div class="ticker" aria-hidden="true"><div class="t"><span data-i18n="t030">Время пришло</span><i>✈</i><span data-i18n="t031">Свобода выбора</span><i>✈</i><span data-i18n="t032">Путешествия</span><i>✈</i><span data-i18n="t033">Люди рядом</span><i>✈</i><span data-i18n="t034">Италия</span><i>✈</i><span data-i18n="t035">Новая глава</span><i>✈</i><span data-i18n="t036">Разговор</span><i>✈</i><span data-i18n="t037">Время пришло</span><i>✈</i><span data-i18n="t038">Свобода выбора</span><i>✈</i><span data-i18n="t039">Путешествия</span><i>✈</i><span data-i18n="t040">Люди рядом</span><i>✈</i><span data-i18n="t041">Италия</span><i>✈</i><span data-i18n="t042">Новая глава</span><i>✈</i><span data-i18n="t043">Разговор</span><i>✈</i></div></div>
 
 <!-- ABOUT -->
 <section id="about">
@@ -568,33 +584,33 @@ html.dlg-open{overflow:hidden}
     <div class="rv about">
       <div class="photo rv rv-l"><img src="img/about_gasse.jpg" alt="Владимир в Италии" loading="lazy" style="object-position:50% 15%"></div>
       <div>
-        <div class="eyebrow">Обо мне</div>
-        <h2>Я не идеальный. <em>Я просто однажды решил жить иначе</em></h2>
-        <p>Я вырос в Казахстане, в 1996 году мы с семьёй переехали в Германию. С 2017 года у меня была своя фирма: свои продукты, свои клиенты, свой цех. Потом пандемия, новое направление, три года работы — и цены из Китая, с которыми невозможно было конкурировать.</p>
-        <p>Я долго искал, что дальше. И в 2026 году принял решение: <strong>закрыл фирму, и мы с женой Ириной и дочкой переехали в Италию</strong>, на юг, к морю.</p>
-        <p>Имя Винденбах — это фамилия моего отца Виктора. Поэтому три «В»: Владимир Винденбах Викторович.</p>
+        <div data-i18n="t044" class="eyebrow">Обо мне</div>
+        <h2 data-i18n="t045">Я не идеальный. <em>Я просто однажды решил жить иначе</em></h2>
+        <p data-i18n="t046">Я вырос в Казахстане, в 1996 году мы с семьёй переехали в Германию. С 2017 года у меня была своя фирма: свои продукты, свои клиенты, свой цех. Потом пандемия, новое направление, три года работы — и цены из Китая, с которыми невозможно было конкурировать.</p>
+        <p data-i18n="t047">Я долго искал, что дальше. И в 2026 году принял решение: <strong>закрыл фирму, и мы с женой Ириной и дочкой переехали в Италию</strong>, на юг, к морю.</p>
+        <p data-i18n="t048">Имя Винденбах — это фамилия моего отца Виктора. Поэтому три «В»: Владимир Винденбах Викторович.</p>
         <div class="timeline">
-          <div><b>1996</b>переезд в Германию</div>
-          <div><b>2017</b>своя фирма и свои продукты</div>
-          <div><b>2026</b>первые путешествия с клубом, решение закрыть фирму</div>
-          <div><b>Сейчас</b>Италия, семья, море и новые люди рядом</div>
+          <div data-i18n="t049"><b>1996</b>переезд в Германию</div>
+          <div data-i18n="t050"><b>2017</b>своя фирма и свои продукты</div>
+          <div data-i18n="t051"><b>2026</b>первые путешествия с клубом, решение закрыть фирму</div>
+          <div data-i18n="t052"><b>Сейчас</b>Италия, семья, море и новые люди рядом</div>
         </div>
       </div>
     </div>
 
     <div class="rv life">
       <div class="life-text">
-        <div class="eyebrow">Как мы живём</div>
-        <h3>Что мы с женой <em>убрали</em> из своей жизни</h3>
-        <p>Это не правила и не диета. Это наш выбор. Долго вокруг нас не было людей, которые живут так же — сейчас они есть.</p>
+        <div data-i18n="t053" class="eyebrow">Как мы живём</div>
+        <h3 data-i18n="t054">Что мы с женой <em>убрали</em> из своей жизни</h3>
+        <p data-i18n="t055">Это не правила и не диета. Это наш выбор. Долго вокруг нас не было людей, которые живут так же — сейчас они есть.</p>
       </div>
       <div class="life-words">
-        <span class="w"><s>мясо</s><i>7 лет</i></span>
-        <span class="w"><s>телевизор</s><i>7 лет</i></span>
-        <span class="w"><s>алкоголь</s></span>
-        <span class="w"><s>кофе</s></span>
-        <span class="w"><s>сладкое</s></span>
-        <span class="w"><s>телефон по утрам</s><i>сначала зарядка</i></span>
+        <span class="w"><s data-i18n="t056">мясо</s><i data-i18n="t057">7 лет</i></span>
+        <span class="w"><s data-i18n="t058">телевизор</s><i data-i18n="t059">7 лет</i></span>
+        <span class="w"><s data-i18n="t060">алкоголь</s></span>
+        <span class="w"><s data-i18n="t061">кофе</s></span>
+        <span class="w"><s data-i18n="t062">сладкое</s></span>
+        <span class="w"><s data-i18n="t063">телефон по утрам</s><i data-i18n="t064">сначала зарядка</i></span>
       </div>
     </div>
   </div>
@@ -604,16 +620,16 @@ html.dlg-open{overflow:hidden}
 <section class="alt" id="club">
   <div class="deco" style="top:10%;left:4%;width:56px;height:56px;animation-delay:3s"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg></div><div class="deco" style="top:70%;left:92%;width:80px;height:80px;animation-delay:6s"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg></div>
   <div class="wrap">
-    <div class="eyebrow">Клуб путешественников</div>
-    <h2>Что мне дал <em>клуб</em></h2>
-    <p class="lead">Я состою в закрытом клубе путешественников. Внутри — цены на отели, круизы и поездки, которых нет на обычных сайтах. И люди, с которыми хочется ехать дальше.</p>
+    <div data-i18n="t065" class="eyebrow">Клуб путешественников</div>
+    <h2 data-i18n="t066">Что мне дал <em>клуб</em></h2>
+    <p data-i18n="t067" class="lead">Я состою в закрытом клубе путешественников. Внутри — цены на отели, круизы и поездки, которых нет на обычных сайтах. И люди, с которыми хочется ехать дальше.</p>
     <div class="cards">
-      <div class="card rv"><button class="plus" aria-label="Подробнее">+</button><div class="ico">✈</div><h3>Закрытые цены</h3><p>Отели, круизы и туры по ценам для участников. Их видит только тот, кто в клубе.</p><div class="more">Бронируете сами, в приложении клуба. В разговоре я покажу на своём аккаунте, как это выглядит изнутри.</div></div>
-      <div class="card rv"><button class="plus" aria-label="Подробнее">+</button><div class="ico">✦</div><h3>Особые поездки</h3><p>Путешествия, которые клуб собирает для своих участников, и встречи в разных странах.</p><div class="more">Например, поездки Life Experience и большие встречи участников. Я сам был на такой встрече в Анталии.</div></div>
-      <div class="card rv"><button class="plus" aria-label="Подробнее">+</button><div class="ico">◎</div><h3>Люди рядом</h3><p>Первый раз за семь лет мы с женой нашли круг, где наш образ жизни никого не удивляет.</p><div class="more">Для нас с Ириной это оказалось важнее всего: рядом люди, которые тоже меняют свою жизнь и не спрашивают, «когда мы станем нормальными».</div></div>
-      <div class="card rv"><button class="plus" aria-label="Подробнее">+</button><div class="ico">⌂</div><h3>Партнёрская часть</h3><p>Клубом можно просто пользоваться. А можно рассказывать о нём другим — как это устроено, объясню лично.</p><div class="more">Это по желанию. Никаких обещаний дохода — я расскажу только то, что делаю сам, и вы решите, нужно ли это вам.</div></div>
+      <div class="card rv"><button class="plus" aria-label="Подробнее">+</button><div class="ico">✈</div><h3 data-i18n="t068">Закрытые цены</h3><p data-i18n="t069">Отели, круизы и туры по ценам для участников. Их видит только тот, кто в клубе.</p><div data-i18n="t070" class="more">Бронируете сами, в приложении клуба. В разговоре я покажу на своём аккаунте, как это выглядит изнутри.</div></div>
+      <div class="card rv"><button class="plus" aria-label="Подробнее">+</button><div class="ico">✦</div><h3 data-i18n="t071">Особые поездки</h3><p data-i18n="t072">Путешествия, которые клуб собирает для своих участников, и встречи в разных странах.</p><div data-i18n="t073" class="more">Например, особые поездки клуба и большие встречи участников. Я сам был на такой встрече в Анталии.</div></div>
+      <div class="card rv"><button class="plus" aria-label="Подробнее">+</button><div class="ico">◎</div><h3 data-i18n="t074">Люди рядом</h3><p data-i18n="t075">Первый раз за семь лет мы с женой нашли круг, где наш образ жизни никого не удивляет.</p><div data-i18n="t076" class="more">Для нас с женой это оказалось важнее всего: рядом люди, которые тоже меняют свою жизнь и не спрашивают, «когда мы станем нормальными».</div></div>
+      <div class="card rv"><button class="plus" aria-label="Подробнее">+</button><div class="ico">⌂</div><h3 data-i18n="t077">Партнёрская часть</h3><p data-i18n="t078">Клубом можно просто пользоваться. А можно рассказывать о нём другим — как это устроено, объясню лично.</p><div data-i18n="t079" class="more">Это по желанию. Никаких обещаний дохода — я расскажу только то, что делаю сам, и вы решите, нужно ли это вам.</div></div>
     </div>
-    <div class="rv note"><b>Важно:</b> я не турагентство и не продаю поездки. Я показываю, как устроен клуб и как в него попасть. Бронировать по этим ценам может только участник.</div>
+    <div data-i18n="t080" class="rv note"><b>Важно:</b> я не турагентство и не продаю поездки. Я показываю, как устроен клуб и как в него попасть. Бронировать по этим ценам может только участник.</div>
   </div>
 </section>
 
@@ -621,16 +637,16 @@ html.dlg-open{overflow:hidden}
 <!-- MOOD -->
 <section class="mood" id="mood">
   <div class="wrap">
-    <div class="eyebrow rv">Вдохновение</div>
-    <h2 class="rv">Мир, <em>который ждёт</em></h2>
-    <p class="lead rv">Места, куда хочется поехать. С клубом многие из них стали ближе, чем казалось.</p>
+    <div data-i18n="t081" class="eyebrow rv">Вдохновение</div>
+    <h2 data-i18n="t082" class="rv">Мир, <em>который ждёт</em></h2>
+    <p data-i18n="t083" class="lead rv">Места, куда хочется поехать. С клубом многие из них стали ближе, чем казалось.</p>
     <div class="goal rv" id="goal">
-      <div class="gnum"><b data-to="13">0</b><span>стран я уже увидел</span></div>
+      <div class="gnum"><b data-to="13">0</b><span data-i18n="t084">стран я уже увидел</span></div>
       <div class="gbar"><i></i><em>13 / 50</em></div>
-      <div class="gnum gr"><b>50</b><span>моя мечта</span></div>
+      <div class="gnum gr"><b>50</b><span data-i18n="t085">моя мечта</span></div>
     </div>
   </div>
-  <div class="mstrip" aria-label="Фотографии путешествий"><div class="mtrack"><figure><img src="img/mood_fluegel.jpg" alt="Над облаками"><figcaption>Над облаками</figcaption></figure><figure><img src="img/mood_phiphi.jpg" alt="Пхи-Пхи · Таиланд"><figcaption>Пхи-Пхи · Таиланд</figcaption></figure><figure><img src="img/mood_kappadokien.jpg" alt="Каппадокия · Турция"><figcaption>Каппадокия · Турция</figcaption></figure><figure><img src="img/mood_pool.jpg" alt="Пальмы и океан"><figcaption>Пальмы и океан</figcaption></figure><figure><img src="img/mood_strandlaptop.jpg" alt="Работать с видом на море"><figcaption>Работать с видом на море</figcaption></figure><figure><img src="img/mood_fenster.jpg" alt="Следующий рейс"><figcaption>Следующий рейс</figcaption></figure><div class="dup" aria-hidden="true"><figure><img src="img/mood_fluegel.jpg" alt="Над облаками"><figcaption>Над облаками</figcaption></figure><figure><img src="img/mood_phiphi.jpg" alt="Пхи-Пхи · Таиланд"><figcaption>Пхи-Пхи · Таиланд</figcaption></figure><figure><img src="img/mood_kappadokien.jpg" alt="Каппадокия · Турция"><figcaption>Каппадокия · Турция</figcaption></figure><figure><img src="img/mood_pool.jpg" alt="Пальмы и океан"><figcaption>Пальмы и океан</figcaption></figure><figure><img src="img/mood_strandlaptop.jpg" alt="Работать с видом на море"><figcaption>Работать с видом на море</figcaption></figure><figure><img src="img/mood_fenster.jpg" alt="Следующий рейс"><figcaption>Следующий рейс</figcaption></figure></div></div></div>
+  <div class="mstrip" aria-label="Фотографии путешествий"><div class="mtrack"><figure><img src="img/mood_fluegel.jpg" alt="Над облаками"><figcaption data-i18n="t086">Над облаками</figcaption></figure><figure><img src="img/mood_phiphi.jpg" alt="Пхи-Пхи · Таиланд"><figcaption data-i18n="t087">Пхи-Пхи · Таиланд</figcaption></figure><figure><img src="img/mood_kappadokien.jpg" alt="Каппадокия · Турция"><figcaption data-i18n="t088">Каппадокия · Турция</figcaption></figure><figure><img src="img/mood_pool.jpg" alt="Пальмы и океан"><figcaption data-i18n="t089">Пальмы и океан</figcaption></figure><figure><img src="img/mood_strandlaptop.jpg" alt="Работать с видом на море"><figcaption data-i18n="t090">Работать с видом на море</figcaption></figure><figure><img src="img/mood_fenster.jpg" alt="Следующий рейс"><figcaption data-i18n="t091">Следующий рейс</figcaption></figure><div class="dup" aria-hidden="true"><figure><img src="img/mood_fluegel.jpg" alt="Над облаками"><figcaption data-i18n="t092">Над облаками</figcaption></figure><figure><img src="img/mood_phiphi.jpg" alt="Пхи-Пхи · Таиланд"><figcaption data-i18n="t093">Пхи-Пхи · Таиланд</figcaption></figure><figure><img src="img/mood_kappadokien.jpg" alt="Каппадокия · Турция"><figcaption data-i18n="t094">Каппадокия · Турция</figcaption></figure><figure><img src="img/mood_pool.jpg" alt="Пальмы и океан"><figcaption data-i18n="t095">Пальмы и океан</figcaption></figure><figure><img src="img/mood_strandlaptop.jpg" alt="Работать с видом на море"><figcaption data-i18n="t096">Работать с видом на море</figcaption></figure><figure><img src="img/mood_fenster.jpg" alt="Следующий рейс"><figcaption data-i18n="t097">Следующий рейс</figcaption></figure></div></div></div>
 </section>
 
 <!-- POSTER -->
@@ -647,25 +663,25 @@ html.dlg-open{overflow:hidden}
           <animateMotion dur="9s" repeatCount="indefinite" rotate="auto"><mpath href="#pfp"/></animateMotion></g>
       </svg>
       <span class="pdisc" id="p-disc"></span>
-      <span class="pill">Цена для участников клуба</span>
+      <span data-i18n="t098" class="pill">Цена для участников клуба</span>
     </div>
     <div class="pinfo">
-      <div class="eyebrow">Главное предложение подборки</div>
+      <div data-i18n="t099" class="eyebrow">Главное предложение подборки</div>
       <h2 id="p-name"></h2>
       <div class="pwhere" id="p-where"></div>
       <div class="pbox">
         <div class="pic">
-          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6M8 10h.01M12 10h.01M16 10h.01"/></svg><b id="p-stars"></b>отель</div>
-          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg><b id="p-nights"></b>2 взрослых</div>
-          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><b id="p-dates"></b>даты</div>
-          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg><b id="p-rate"></b>оценка гостей</div>
+          <div data-i18n="t100"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6M8 10h.01M12 10h.01M16 10h.01"/></svg><b id="p-stars"></b>отель</div>
+          <div data-i18n="t101"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg><b id="p-nights"></b>2 взрослых</div>
+          <div data-i18n="t102"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><b id="p-dates"></b>даты</div>
+          <div data-i18n="t103"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg><b id="p-rate"></b>оценка гостей</div>
         </div>
         <div class="pprice">
-          <div><div class="o" id="p-old"></div><div class="n" id="p-now"></div><div class="s">за номер на 7 ночей, с налогами</div></div>
+          <div><div class="o" id="p-old"></div><div class="n" id="p-now"></div><div data-i18n="t104" class="s">за номер на 7 ночей, с налогами</div></div>
           <div class="sv" id="p-save"></div>
         </div>
       </div>
-      <a class="btn btn-gold" href="https://ig.me/m/wladimirwindenbach" target="_blank" rel="noopener">Хочу так же — написать «РАЗГОВОР»</a>
+      <a data-i18n="t105" class="btn btn-gold" href="https://ig.me/m/wladimirwindenbach" target="_blank" rel="noopener">Хочу так же — написать «РАЗГОВОР»</a>
       <p class="pnote" id="p-note"></p>
     </div>
   </div>
@@ -674,14 +690,14 @@ html.dlg-open{overflow:hidden}
 <!-- TRIPS -->
 <section class="alt" id="trips" style="padding-top:20px">
   <div class="wrap">
-    <div class="eyebrow">Свежие предложения клуба</div>
-    <h2>Что сейчас <em>можно забронировать</em></h2>
-    <p class="lead">Реальные цены участников на 5-звёздочные отели и поездки клуба. Я обновляю подборку каждые две недели.</p>
+    <div data-i18n="t106" class="eyebrow">Свежие предложения клуба</div>
+    <h2 data-i18n="t107">Что сейчас <em>можно забронировать</em></h2>
+    <p data-i18n="t108" class="lead">Реальные цены участников на 5-звёздочные отели и поездки клуба. Я обновляю подборку каждые две недели.</p>
     <div class="ofilter" role="tablist">
-      <button class="on" data-f="all">Все</button>
-      <button data-f="hotel">Отели 5★</button>
-      <button data-f="trip">Поездки клуба</button>
-      <button data-f="cruise">Круизы</button>
+      <button data-i18n="t109" class="on" data-f="all">Все</button>
+      <button data-i18n="t110" data-f="hotel">Отели 5★</button>
+      <button data-i18n="t111" data-f="trip">Поездки клуба</button>
+      <button data-i18n="t112" data-f="cruise">Круизы</button>
     </div>
     <div class="offers" id="offers"></div>
     <p class="small-note" id="offers-note"></p>
@@ -691,24 +707,49 @@ html.dlg-open{overflow:hidden}
 <!-- FOR WHOM -->
 <section>
   <div class="wrap">
-    <div class="eyebrow">Честно</div>
-    <h2>Кому это <em>подходит</em>, а кому нет</h2>
+    <div data-i18n="t113" class="eyebrow">Честно</div>
+    <h2 data-i18n="t114">Кому это <em>подходит</em>, а кому нет</h2>
     <div class="rv two">
       <ul class="list">
-        <h3>Подходит, если вы</h3>
-        <li>устали жить по одному и тому же кругу</li>
-        <li>любите путешествовать и хотите делать это чаще</li>
-        <li>ищете людей, которые смотрят на жизнь так же, как вы</li>
-        <li>готовы попробовать что-то новое в своём темпе</li>
-        <li>живёте в любой стране — клуб работает отовсюду</li>
+        <h3 data-i18n="t115">Подходит, если вы</h3>
+        <li data-i18n="t116">устали жить по одному и тому же кругу</li>
+        <li data-i18n="t117">любите путешествовать и хотите делать это чаще</li>
+        <li data-i18n="t118">ищете людей, которые смотрят на жизнь так же, как вы</li>
+        <li data-i18n="t119">готовы попробовать что-то новое в своём темпе</li>
+        <li data-i18n="t120">живёте в любой стране — клуб работает отовсюду</li>
       </ul>
       <ul class="list no">
-        <h3>Не подходит, если вы</h3>
-        <li>ищете, где купить дешёвый тур на завтра</li>
-        <li>ждёте быстрых денег без усилий</li>
-        <li>не готовы разговаривать с людьми</li>
-        <li>хотите, чтобы кто-то решил за вас</li>
+        <h3 data-i18n="t121">Не подходит, если вы</h3>
+        <li data-i18n="t122">ищете, где купить дешёвый тур на завтра</li>
+        <li data-i18n="t123">ждёте быстрых денег без усилий</li>
+        <li data-i18n="t124">не готовы разговаривать с людьми</li>
+        <li data-i18n="t125">хотите, чтобы кто-то решил за вас</li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CLOCK -->
+<section class="clocksec" id="clock">
+  <div class="wrap clockgrid">
+    <div class="clockface rv" aria-hidden="true">
+      <svg viewBox="0 0 200 200"><defs><linearGradient id="lgC" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="200" y2="200"><stop offset="0" stop-color="#F4DE97"/><stop offset=".35" stop-color="#E2C060"/><stop offset=".6" stop-color="#D2AA42"/><stop offset="1" stop-color="#B98F30"/></linearGradient></defs>
+        <circle cx="100" cy="100" r="94" fill="#100E0B" stroke="url(#lgC)" stroke-width="2"/>
+        <circle cx="100" cy="100" r="86" fill="none" stroke="rgba(212,175,55,.25)" stroke-width="1" stroke-dasharray="2 5"/>
+        <line x1="100" y1="16" x2="100" y2="26" transform="rotate(0 100 100)" stroke="url(#lgC)" stroke-width="3" stroke-linecap="round"/><line x1="100" y1="19" x2="100" y2="26" transform="rotate(30 100 100)" stroke="url(#lgC)" stroke-width="1.4" stroke-linecap="round"/><line x1="100" y1="19" x2="100" y2="26" transform="rotate(60 100 100)" stroke="url(#lgC)" stroke-width="1.4" stroke-linecap="round"/><line x1="100" y1="16" x2="100" y2="26" transform="rotate(90 100 100)" stroke="url(#lgC)" stroke-width="3" stroke-linecap="round"/><line x1="100" y1="19" x2="100" y2="26" transform="rotate(120 100 100)" stroke="url(#lgC)" stroke-width="1.4" stroke-linecap="round"/><line x1="100" y1="19" x2="100" y2="26" transform="rotate(150 100 100)" stroke="url(#lgC)" stroke-width="1.4" stroke-linecap="round"/><line x1="100" y1="16" x2="100" y2="26" transform="rotate(180 100 100)" stroke="url(#lgC)" stroke-width="3" stroke-linecap="round"/><line x1="100" y1="19" x2="100" y2="26" transform="rotate(210 100 100)" stroke="url(#lgC)" stroke-width="1.4" stroke-linecap="round"/><line x1="100" y1="19" x2="100" y2="26" transform="rotate(240 100 100)" stroke="url(#lgC)" stroke-width="1.4" stroke-linecap="round"/><line x1="100" y1="16" x2="100" y2="26" transform="rotate(270 100 100)" stroke="url(#lgC)" stroke-width="3" stroke-linecap="round"/><line x1="100" y1="19" x2="100" y2="26" transform="rotate(300 100 100)" stroke="url(#lgC)" stroke-width="1.4" stroke-linecap="round"/><line x1="100" y1="19" x2="100" y2="26" transform="rotate(330 100 100)" stroke="url(#lgC)" stroke-width="1.4" stroke-linecap="round"/>
+        <text x="100" y="74" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-weight="700" font-size="22" fill="url(#lgC)" opacity=".85">В</text>
+        <line id="ch" x1="100" y1="100" x2="100" y2="58" stroke="url(#lgC)" stroke-width="5" stroke-linecap="round"/>
+        <line id="cm" x1="100" y1="100" x2="100" y2="38" stroke="url(#lgC)" stroke-width="3.2" stroke-linecap="round"/>
+        <line id="cs" x1="100" y1="114" x2="100" y2="30" stroke="#E8C766" stroke-width="1.3" stroke-linecap="round"/>
+        <circle cx="100" cy="100" r="5" fill="url(#lgC)"/>
+      </svg>
+    </div>
+    <div class="clocktext">
+      <div class="eyebrow rv" data-i18n="c01">Время пришло</div>
+      <h2 class="rv" data-i18n="c02">Лучшее время начать было вчера. <em>Следующее — сейчас</em></h2>
+      <div class="ccount rv"><span data-i18n="c03">С начала года прошло</span><b id="ccount">—</b></div>
+      <p class="lead rv" data-i18n="c04">Сколько из этих дней были по-настоящему вашими? Если ответ вас не радует — это не приговор. Это просто повод поговорить.</p>
+      <a class="btn btn-gold rv" href="https://ig.me/m/wladimirwindenbach" target="_blank" rel="noopener" data-i18n="c05">Написать «РАЗГОВОР»</a>
     </div>
   </div>
 </section>
@@ -716,13 +757,13 @@ html.dlg-open{overflow:hidden}
 <!-- STEPS -->
 <section class="alt" id="start">
   <div class="wrap">
-    <div class="eyebrow">Как начать</div>
-    <h2>Четыре <em>спокойных</em> шага</h2>
+    <div data-i18n="t126" class="eyebrow">Как начать</div>
+    <h2 data-i18n="t127">Четыре <em>спокойных</em> шага</h2>
     <div class="steps rv"><div class="steps-line"><div class="pl"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg></div></div>
-      <div class="step"><h3>Напишите мне</h3><p>Слово <span class="code">РАЗГОВОР</span> в Instagram или в Telegram. Пару слов о себе.</p></div>
-      <div class="step"><h3>Разговор</h3><p>Созвонимся. Я расскажу свою историю и послушаю вашу.</p></div>
-      <div class="step"><h3>Покажу изнутри</h3><p>Покажу на своём аккаунте, как выглядит клуб и что видит участник.</p></div>
-      <div class="step"><h3>Решите сами</h3><p>Без давления и без спешки. Если не ваше — просто останемся на связи.</p></div>
+      <div class="step"><h3 data-i18n="t128">Напишите мне</h3><p data-i18n="t129">Слово <span class="code">РАЗГОВОР</span> в Instagram или в Telegram. Пару слов о себе.</p></div>
+      <div class="step"><h3 data-i18n="t130">Разговор</h3><p data-i18n="t131">Созвонимся. Я расскажу свою историю и послушаю вашу.</p></div>
+      <div class="step"><h3 data-i18n="t132">Покажу изнутри</h3><p data-i18n="t133">Покажу на своём аккаунте, как выглядит клуб и что видит участник.</p></div>
+      <div class="step"><h3 data-i18n="t134">Решите сами</h3><p data-i18n="t135">Без давления и без спешки. Если не ваше — просто останемся на связи.</p></div>
     </div>
   </div>
 </section>
@@ -730,14 +771,14 @@ html.dlg-open{overflow:hidden}
 <!-- GALLERY -->
 <section>
   <div class="wrap">
-    <div class="eyebrow">Жизнь сейчас</div>
-    <h2>Встречи, дороги <em>и море</em></h2>
+    <div data-i18n="t136" class="eyebrow">Жизнь сейчас</div>
+    <h2 data-i18n="t137">Встречи, дороги <em>и море</em></h2>
     <div class="rv gallery">
-      <figure class="g-wide g-tall"><img src="img/g_abend_klub.jpg" alt="Вечер на встрече клуба" loading="lazy" style="object-position:30% 30%"><figcaption>Вечер клуба</figcaption></figure>
-      <figure class="g-tall"><img src="img/g_ski.jpg" alt="Владимир в горах на лыжах" loading="lazy" style="object-position:60% 30%"><figcaption>Альпы</figcaption></figure>
-      <figure class="g-tall"><img src="img/g_liner.jpg" alt="Владимир на лайнере" loading="lazy" style="object-position:50% 55%"><figcaption>На лайнере</figcaption></figure>
-      <figure class="g-tall"><img src="img/g_apulien.jpg" alt="Владимир на смотровой площадке над морем" loading="lazy" style="object-position:50% 35%"><figcaption>Апулия</figcaption></figure>
-      <figure class="g-tall"><img src="img/g_alpen.jpg" alt="Владимир отдыхает в горах" loading="lazy" style="object-position:40% 50%"><figcaption>Тишина в горах</figcaption></figure>
+      <figure class="g-wide g-tall"><img src="img/g_abend_klub.jpg" alt="Вечер на встрече клуба" loading="lazy" style="object-position:30% 30%"><figcaption data-i18n="t138">Вечер клуба</figcaption></figure>
+      <figure class="g-tall"><img src="img/g_ski.jpg" alt="Владимир в горах на лыжах" loading="lazy" style="object-position:60% 30%"><figcaption data-i18n="t139">Альпы</figcaption></figure>
+      <figure class="g-tall"><img src="img/g_liner.jpg" alt="Владимир на лайнере" loading="lazy" style="object-position:50% 55%"><figcaption data-i18n="t140">На лайнере</figcaption></figure>
+      <figure class="g-tall"><img src="img/g_apulien.jpg" alt="Владимир на смотровой площадке над морем" loading="lazy" style="object-position:50% 35%"><figcaption data-i18n="t141">Апулия</figcaption></figure>
+      <figure class="g-tall"><img src="img/g_alpen.jpg" alt="Владимир отдыхает в горах" loading="lazy" style="object-position:40% 50%"><figcaption data-i18n="t142">Тишина в горах</figcaption></figure>
       <figure class="g-tall"><img src="img/hotel_lobby.jpg" alt="Владимир в лобби отеля" loading="lazy"></figure>
       <figure class="g-tall"><img src="img/hafen_weiss.jpg" alt="Владимир в порту" loading="lazy"></figure>
     </div>
@@ -749,12 +790,12 @@ html.dlg-open{overflow:hidden}
   <div class="wrap book">
     <a class="cover" href="https://drive.google.com/file/d/1ReCE-UkjF006wV_vktv7XbdvkiqxT0Pg/view" target="_blank" rel="noopener"><img src="img/buch_cover.jpg" alt="Обложка книги «Время пришло»" loading="lazy"></a>
     <div>
-      <div class="eyebrow">Бесплатно</div>
-      <h2>Моя книга <em>«Время пришло»</em></h2>
-      <p class="lead">Детство в Казахстане, переезд в Германию, своя фирма, первое море, тяжёлые годы и решение уехать. Если вы узнаете в ней себя — напишите мне.</p>
+      <div data-i18n="t143" class="eyebrow">Бесплатно</div>
+      <h2 data-i18n="t144">Моя книга <em>«Время пришло»</em></h2>
+      <p data-i18n="t145" class="lead">Детство в Казахстане, переезд в Германию, своя фирма, первое море, тяжёлые годы и решение уехать. Если вы узнаете в ней себя — напишите мне.</p>
       <div class="row" style="margin-top:24px">
-        <a class="btn btn-gold" href="https://drive.google.com/file/d/1ReCE-UkjF006wV_vktv7XbdvkiqxT0Pg/view" target="_blank" rel="noopener">Читать книгу</a>
-        <a class="btn btn-line" href="https://t.me/windenbach" target="_blank" rel="noopener">Мой Telegram-канал</a>
+        <a data-i18n="t146" class="btn btn-gold" href="https://drive.google.com/file/d/1ReCE-UkjF006wV_vktv7XbdvkiqxT0Pg/view" target="_blank" rel="noopener">Читать книгу</a>
+        <a data-i18n="t147" class="btn btn-line" href="https://t.me/windenbach" target="_blank" rel="noopener">Мой Telegram-канал</a>
       </div>
     </div>
   </div>
@@ -763,15 +804,15 @@ html.dlg-open{overflow:hidden}
 <!-- FAQ -->
 <section id="faq">
   <div class="wrap">
-    <div class="eyebrow">Вопросы</div>
-    <h2>Честные <em>ответы</em></h2>
+    <div data-i18n="t148" class="eyebrow">Вопросы</div>
+    <h2 data-i18n="t149">Честные <em>ответы</em></h2>
     <div class="rv faq">
-      <details><summary>Вы продаёте путешествия?</summary><p>Нет. Я не турагентство и не бронирую поездки для других. Закрытые цены видит только участник клуба — я показываю, как туда попасть.</p></details>
-      <details><summary>Это пирамида?</summary><p>За клубом стоит реальный продукт: участники бронируют настоящие отели, круизы и поездки. Многие просто пользуются клубом и никого не приглашают. Партнёрская часть — по желанию. Задайте мне любой вопрос в разговоре, я отвечу открыто.</p></details>
-      <details><summary>Сколько стоит участие?</summary><p>Членство в клубе — 99 € в год. Всё остальное расскажу и покажу в разговоре.</p></details>
-      <details><summary>Обязательно приглашать людей?</summary><p>Нет. Можно просто путешествовать. Если захотите рассказывать о клубе — я покажу, как это делаю сам.</p></details>
-      <details><summary>Я живу не в Германии и не в Италии. Это подходит?</summary><p>Да. Клуб работает из любой страны, а разговаривать мы будем онлайн.</p></details>
-      <details><summary>Что будет после того, как я напишу?</summary><p>Я отвечу лично, мы договоримся о коротком разговоре. Никаких обязательств: вы просто узнаете, как это устроено.</p></details>
+      <details><summary data-i18n="t150">Вы продаёте путешествия?</summary><p data-i18n="t151">Нет. Я не турагентство и не бронирую поездки для других. Закрытые цены видит только участник клуба — я показываю, как туда попасть.</p></details>
+      <details><summary data-i18n="t152">Это пирамида?</summary><p data-i18n="t153">За клубом стоит реальный продукт: участники бронируют настоящие отели, круизы и поездки. Многие просто пользуются клубом и никого не приглашают. Партнёрская часть — по желанию. Задайте мне любой вопрос в разговоре, я отвечу открыто.</p></details>
+      <details><summary data-i18n="t154">Сколько стоит участие?</summary><p data-i18n="t155">Членство в клубе — 99 € в год. Всё остальное расскажу и покажу в разговоре.</p></details>
+      <details><summary data-i18n="t156">Обязательно приглашать людей?</summary><p data-i18n="t157">Нет. Можно просто путешествовать. Если захотите рассказывать о клубе — я покажу, как это делаю сам.</p></details>
+      <details><summary data-i18n="t158">Я живу не в Германии и не в Италии. Это подходит?</summary><p data-i18n="t159">Да. Клуб работает из любой страны, а разговаривать мы будем онлайн.</p></details>
+      <details><summary data-i18n="t160">Что будет после того, как я напишу?</summary><p data-i18n="t161">Я отвечу лично, мы договоримся о коротком разговоре. Никаких обязательств: вы просто узнаете, как это устроено.</p></details>
     </div>
   </div>
 </section>
@@ -782,12 +823,12 @@ html.dlg-open{overflow:hidden}
   <div class="fly" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg></div>
   <div class="wrap">
     <div class="glass">
-      <div class="eyebrow">Ваш следующий шаг</div>
-      <h2>Время <em>пришло?</em></h2>
-      <p class="lead" style="margin:0 auto">Напишите мне слово <span class="code">РАЗГОВОР</span> — в Instagram или в Telegram. Я отвечу сам.</p>
+      <div data-i18n="t162" class="eyebrow">Ваш следующий шаг</div>
+      <h2 data-i18n="t163">Время <em>пришло?</em></h2>
+      <p data-i18n="t164" class="lead" style="margin:0 auto">Напишите мне слово <span class="code">РАЗГОВОР</span> — в Instagram или в Telegram. Я отвечу сам.</p>
       <div class="row">
-        <a class="btn btn-gold" href="https://ig.me/m/wladimirwindenbach" target="_blank" rel="noopener">Instagram</a>
-        <a class="btn btn-line" href="https://t.me/windenbach" target="_blank" rel="noopener">Telegram</a>
+        <a data-i18n="t165" class="btn btn-gold" href="https://ig.me/m/wladimirwindenbach" target="_blank" rel="noopener">Instagram</a>
+        <a data-i18n="t166" class="btn btn-line" href="https://t.me/windenbach" target="_blank" rel="noopener">Telegram</a>
       </div>
     </div>
   </div>
@@ -797,40 +838,44 @@ html.dlg-open{overflow:hidden}
   <div class="wrap">
     <div class="emblem-wrap rv"><svg class="emblem" viewBox="0 0 300 300" role="img" aria-label="Владимир Винденбах — мечты в реальность"><g transform="translate(55 10) scale(.95)"><defs><linearGradient id="lgE" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4DE97"/><stop offset=".35" stop-color="#E2C060"/><stop offset=".6" stop-color="#D2AA42"/><stop offset="1" stop-color="#B98F30"/></linearGradient></defs><path d="M36.1 152.7 A 78 78 0 1 1 148.0 46.5" fill="none" stroke="url(#lgE)" stroke-width="3" stroke-dasharray="5 8" stroke-linecap="round"/><path d="M168.9 71.4 A 78 78 0 0 1 163.9 152.7" fill="none" stroke="url(#lgE)" stroke-width="3" stroke-dasharray="5 8" stroke-linecap="round"/><g transform="translate(159.8 57.9) rotate(140) scale(1.05) translate(-12 -12)"><path fill="url(#lgE)" d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></g><text x="100" y="146" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-weight="700" font-size="118" fill="url(#lgE)">В</text></g><path id="arcE" d="M14 188 Q150 318 286 188" fill="none"/><text font-family="Cormorant Garamond,Georgia,serif" font-weight="700" font-size="20" letter-spacing="2.5" fill="url(#lgE)"><textPath href="#arcE" startOffset="50%" text-anchor="middle">МЕЧТЫ В РЕАЛЬНОСТЬ</textPath></text></svg></div>
     <div class="row">
-      <div>© 2026 Владимир Винденбах</div>
+      <div data-i18n="t167">© 2026 Владимир Винденбах</div>
       <div class="links">
-        <a href="https://www.instagram.com/wladimirwindenbach" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://t.me/windenbach" target="_blank" rel="noopener">Telegram</a>
-        <a href="impressum.html">Импрессум</a>
-        <a href="datenschutz.html">Конфиденциальность</a>
+        <a data-i18n="t168" href="https://www.instagram.com/wladimirwindenbach" target="_blank" rel="noopener">Instagram</a>
+        <a data-i18n="t169" href="https://t.me/windenbach" target="_blank" rel="noopener">Telegram</a>
+        <a data-i18n="t170" href="impressum.html">Импрессум</a>
+        <a data-i18n="t171" href="datenschutz.html">Конфиденциальность</a>
       </div>
     </div>
-    <p class="disc">Это личная страница независимого участника клуба путешественников, а не официальный сайт компании. Результаты у каждого свои; страница не обещает доход.</p>
+    <p data-i18n="t172" class="disc">Это личная страница независимого участника клуба путешественников, а не официальный сайт компании. Результаты у каждого свои; страница не обещает доход.</p>
   </div>
 </footer>
 
 
 
 <script src="offers.js"></script>
+<script src="i18n.js"></script>
 <script>
 (function(){
   var P=window.POSTER,O=window.OFFERS; if(!P||!O||!O[P.idx||0]) return;
   var o=O[P.idx||0], $=function(i){return document.getElementById(i)};
-  function eur(n){return n.toLocaleString('ru-RU').replace(/,/g,' ')+' €'}
   var img=P.img||o.img; if(!img) return;
   $('p-bg').src=img; $('p-bg').alt=o.place;
   if(P.clip){$('p-fg').src=img;$('p-fg').style.clipPath=P.clip;$('p-fg').style.webkitClipPath=P.clip}else{$('p-fg').remove()}
-  var w=$('p-word'); w.textContent=P.title||o.country.toUpperCase();
-  w.style.bottom=(P.bottom||40)+'%'; w.style.fontSize=(P.size||17)+'cqw';
-  $('p-pre').textContent=P.pre||'Отдых мечты';
+  var w=$('p-word'); w.style.bottom=(P.bottom||40)+'%'; w.style.fontSize=(P.size||17)+'cqw';
   var pct=o.pct||(o.old?Math.round((1-o.price/o.old)*100):0);
   if(pct){$('p-disc').textContent='−'+pct+'%'}else{$('p-disc').remove()}
-  $('p-name').textContent=o.name; $('p-where').textContent=o.country+' · '+o.place;
-  $('p-stars').textContent=(o.stars||5)+'★'; $('p-nights').textContent=(o.note||'').split('·')[0].trim();
-  $('p-dates').textContent=o.dates; $('p-rate').textContent=o.rating||'—';
-  if(o.old){$('p-old').textContent=eur(o.old);$('p-save').textContent='экономия '+eur(o.old-o.price)}else{$('p-save').remove()}
-  $('p-now').textContent=eur(o.price);
-  $('p-note').textContent='Цена на '+window.OFFERS_CHECKED+', зависит от дат и наличия мест. Бронирование доступно только участникам клуба.';
+  function render(){
+    var pi=(window.POSTER_I18N||{})[window.LANG]||{};
+    w.textContent=pi.title||P.title||tr(o,'country').toUpperCase();
+    $('p-pre').textContent=pi.pre||(window.LANG==='ru'?(P.pre||L('pre')):L('pre'));
+    $('p-name').textContent=tr(o,'name'); $('p-where').textContent=tr(o,'country')+' · '+tr(o,'place');
+    $('p-stars').textContent=(o.stars||5)+'★'; $('p-nights').textContent=(tr(o,'note')||'').split('·')[0].trim();
+    $('p-dates').textContent=tr(o,'dates'); $('p-rate').textContent=o.rating||'—';
+    if(o.old){$('p-old').textContent=money(o.old);if($('p-save'))$('p-save').textContent=L('psave',{x:money(o.old-o.price)})}else if($('p-save')){$('p-save').remove()}
+    $('p-now').textContent=money(o.price);
+    $('p-note').textContent=L('pnote',{d:window.OFFERS_CHECKED});
+  }
+  render(); onLang(render);
   $('poster').style.display='';
   new IntersectionObserver(function(e,ob){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');ob.disconnect()}})},{threshold:.3}).observe($('pcard'));
 })();
@@ -839,21 +884,29 @@ html.dlg-open{overflow:hidden}
 <script>
 (function(){
   var box=document.getElementById('offers'); if(!box||!window.OFFERS) return;
-  function eur(n){return n.toLocaleString('ru-RU').replace(/,/g,' ')+' €'}
-  var ig='https://ig.me/m/wladimirwindenbach';
-  box.innerHTML=window.OFFERS.map(function(o){
-    var pct=o.pct||(o.old?Math.round((1-o.price/o.old)*100):0);
-    var img=o.img?'<img src="'+o.img+'" alt="'+o.place+'" loading="lazy">':'<div class="ph"><small>'+o.country+'</small>'+o.place.split(',')[0]+'</div>';
-    var tag='<span class="tag">'+(o.badge||'Отель '+'★'.repeat(o.stars||5))+'</span>';
-    var top=o.type==='hotel'?'<div class="starsr">'+'★'.repeat(o.stars)+'<span class="score">'+o.rating+'</span></div>':'';
-    var price=o.old
-      ? '<div><div class="old">'+eur(o.old)+'</div><div class="now">'+eur(o.price)+'</div><div class="per">для участника, с налогами</div></div><div class="save">экономия<b>'+eur(o.old-o.price)+'</b></div>'
-      : '<div><div class="now">'+eur(o.price)+'</div><div class="per">'+o.per+'</div></div>'+(o.pts?'<div class="save">можно оплатить<b>до '+o.pts.toLocaleString('ru-RU').replace(/,/g,' ')+' баллов</b></div>':'');
-    return '<article class="offer rv'+(window.DETAILS&&o.id&&window.DETAILS[o.id]?' has-d':'')+'" data-type="'+o.type+'"'+(o.id?' data-id="'+o.id+'"':'')+'><div class="img">'+img+tag+(pct?'<span class="disc">−'+pct+'%</span>':'')+(o.status?'<span class="status">'+o.status+'</span>':'')+'</div>'+
-      '<div class="body"><div class="where">'+o.country+' · '+o.place+'</div><h3>'+o.name+'</h3>'+top+'<div class="meta"><b>'+o.dates+'</b> · '+o.note+'</div></div>'+
-      '<div class="stub">'+price+'</div>'+(window.DETAILS&&o.id&&window.DETAILS[o.id]?'<button class="more-btn" type="button" data-open="'+o.id+'">Подробнее о поездке →</button>':'')+'<a class="go" href="'+ig+'" target="_blank" rel="noopener">Хочу так же — написать «РАЗГОВОР»</a></article>';
-  }).join('');
-  document.getElementById('offers-note').textContent='Цены на '+window.OFFERS_CHECKED+'. Цены зависят от дат и наличия мест и могут измениться. Бронирование доступно только участникам клуба.';
+  var ig='https://ig.me/m/wladimirwindenbach', first=true;
+  function pts(n){return num(n)}
+  function render(){
+    var D=window.DETAILS||{};
+    box.innerHTML=window.OFFERS.map(function(o){
+      var hasD=o.id&&D[o.id];
+      var pct=o.pct||(o.old?Math.round((1-o.price/o.old)*100):0);
+      var img=o.img?'<img src="'+o.img+'" alt="'+tr(o,'place')+'" loading="lazy">':'<div class="ph"><small>'+tr(o,'country')+'</small>'+tr(o,'place').split(',')[0]+'</div>';
+      var tag='<span class="tag">'+(o.badge?tr(o,'badge'):L('hotel')+' '+'★'.repeat(o.stars||5))+'</span>';
+      var top=o.type==='hotel'?'<div class="starsr">'+'★'.repeat(o.stars)+'<span class="score">'+o.rating+'</span></div>':'';
+      var price=o.old
+        ? '<div><div class="old">'+money(o.old)+'</div><div class="now">'+money(o.price)+'</div><div class="per">'+L('member')+'</div></div><div class="save">'+L('save')+'<b>'+money(o.old-o.price)+'</b></div>'
+        : '<div><div class="now">'+money(o.price)+'</div><div class="per">'+tr(o,'per')+'</div></div>'+(o.pts?'<div class="save">'+L('canpay')+'<b>'+L('pts',{n:pts(o.pts)})+'</b></div>':'');
+      return '<article class="offer rv'+(first?'':' in')+(hasD?' has-d':'')+'" data-type="'+o.type+'"'+(o.id?' data-id="'+o.id+'"':'')+'><div class="img">'+img+tag+(pct?'<span class="disc">−'+pct+'%</span>':'')+(o.status?'<span class="status">'+o.status+'</span>':'')+'</div>'+
+        '<div class="body"><div class="where">'+tr(o,'country')+' · '+tr(o,'place')+'</div><h3>'+tr(o,'name')+'</h3>'+top+'<div class="meta"><b>'+tr(o,'dates')+'</b> · '+tr(o,'note')+'</div></div>'+
+        '<div class="stub">'+price+'</div>'+(hasD?'<button class="more-btn" type="button" data-open="'+o.id+'">'+L('more')+'</button>':'')+'<a class="go" href="'+ig+'" target="_blank" rel="noopener">'+L('want')+'</a></article>';
+    }).join('');
+    document.getElementById('offers-note').textContent=L('note',{d:window.OFFERS_CHECKED});
+    var on=document.querySelector('.ofilter button.on'); var f=on?on.getAttribute('data-f'):'all';
+    document.querySelectorAll('.offer').forEach(function(c){c.classList.toggle('hide',f!=='all'&&c.getAttribute('data-type')!==f)});
+    first=false;
+  }
+  render(); onLang(render);
   document.querySelectorAll('.ofilter button').forEach(function(b){b.addEventListener('click',function(){
     document.querySelectorAll('.ofilter button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');
     var f=b.getAttribute('data-f');document.querySelectorAll('.offer').forEach(function(c){c.classList.toggle('hide',f!=='all'&&c.getAttribute('data-type')!==f);c.classList.add('in')});
@@ -903,18 +956,18 @@ new IntersectionObserver(function(e,o){e.forEach(function(x){if(!x.isIntersectin
   function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
   function li(a,cls){return '<ul class="'+cls+'">'+a.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul>'}
   function open(id,push){
-    var d=D[id],o=O.filter(function(x){return x.id===id})[0]; if(!d||!o) return;
-    var h='<div class="dlg-hero"'+(o.img?' style="background-image:url('+o.img+')"':'')+'><div class="dlg-hero-in"><span class="dlg-badge">'+esc(o.badge||'')+'</span><h2 id="dlg-title">'+esc(o.name)+'</h2><div class="dlg-where">'+esc(o.country+' · '+o.place)+'</div></div></div>';
-    h+='<div class="dlg-price"><div><div class="n">'+eur(o.price)+'</div><div class="s">'+esc(o.per||'')+'</div></div>'+(o.pts?'<div class="sv">можно оплатить до '+o.pts.toLocaleString('ru-RU').replace(/,/g,' ')+' бонусных баллов</div>':'')+'</div>';
+    var d=trD(id),o=O.filter(function(x){return x.id===id})[0]; if(!d||!o) return; window.__dlgId=id;
+    var h='<div class="dlg-hero"'+(o.img?' style="background-image:url('+o.img+')"':'')+'><div class="dlg-hero-in"><span class="dlg-badge">'+esc(o.badge?tr(o,'badge'):'')+'</span><h2 id="dlg-title">'+esc(tr(o,'name'))+'</h2><div class="dlg-where">'+esc(tr(o,'country')+' · '+tr(o,'place'))+'</div></div></div>';
+    h+='<div class="dlg-price"><div><div class="n">'+money(o.price)+'</div><div class="s">'+esc(tr(o,'per')||'')+'</div></div>'+(o.pts?'<div class="sv">'+L('ptsLong',{n:num(o.pts)})+'</div>':'')+'</div>';
     h+='<p class="dlg-intro">'+esc(d.intro)+'</p>';
-    h+='<h3>Коротко о поездке</h3>'+li(d.facts,'dlg-facts');
-    h+='<div class="dlg-two"><div><h3>Что входит</h3>'+li(d.incl,'dlg-yes')+'</div><div><h3>Не входит</h3>'+li(d.excl,'dlg-no')+'</div></div>';
-    if(d.hotel) h+='<h3>'+(o.type==='cruise'?'Корабль: ':'Отель: ')+esc(d.hotel.name)+'</h3><p>'+esc(d.hotel.text)+'</p>';
-    if(d.prog) h+='<h3>Программа</h3><ol class="dlg-prog">'+d.prog.map(function(x){return '<li><b>'+esc(x[0])+'</b><span>'+esc(x[1])+'</span></li>'}).join('')+'</ol>';
-    if(d.season) h+='<h3>Погода в это время</h3><p>'+esc(d.season)+'</p>';
-    if(d.map) h+='<p><a class="dlg-map" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(d.map)+'" target="_blank" rel="noopener">Открыть на карте ↗</a></p>';
-    if(d.faq) h+='<h3>Вопросы и ответы</h3>'+d.faq.map(function(x){return '<details><summary>'+esc(x[0])+'</summary><p>'+esc(x[1])+'</p></details>'}).join('');
-    h+='<div class="dlg-cta"><p>Хотите так же? Напишите мне слово <span class="code">РАЗГОВОР</span>, и я расскажу, как устроен клуб. Решение всегда за вами.</p><div class="row"><a class="btn btn-gold" href="'+ig+'" target="_blank" rel="noopener">Instagram</a><a class="btn btn-line" href="'+tg+'" target="_blank" rel="noopener">Telegram</a></div><p class="dlg-note">Цены на '+esc(window.OFFERS_CHECKED||'')+'. Они зависят от наличия мест и могут измениться. Бронирование доступно только участникам клуба.</p></div>';
+    h+='<h3>'+L('facts')+'</h3>'+li(d.facts,'dlg-facts');
+    h+='<div class="dlg-two"><div><h3>'+L('incl')+'</h3>'+li(d.incl,'dlg-yes')+'</div><div><h3>'+L('excl')+'</h3>'+li(d.excl,'dlg-no')+'</div></div>';
+    if(d.hotel) h+='<h3>'+(o.type==='cruise'?L('ship'):L('hotelL'))+esc(d.hotel.name)+'</h3><p>'+esc(d.hotel.text)+'</p>';
+    if(d.prog) h+='<h3>'+L('prog')+'</h3><ol class="dlg-prog">'+d.prog.map(function(x){return '<li><b>'+esc(x[0])+'</b><span>'+esc(x[1])+'</span></li>'}).join('')+'</ol>';
+    if(d.season) h+='<h3>'+L('season')+'</h3><p>'+esc(d.season)+'</p>';
+    if(d.map) h+='<p><a class="dlg-map" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(d.map)+'" target="_blank" rel="noopener">'+L('map')+'</a></p>';
+    if(d.faq) h+='<h3>'+L('faq')+'</h3>'+d.faq.map(function(x){return '<details><summary>'+esc(x[0])+'</summary><p>'+esc(x[1])+'</p></details>'}).join('');
+    h+='<div class="dlg-cta"><p>'+L('cta')+'</p><div class="row"><a class="btn btn-gold" href="'+ig+'" target="_blank" rel="noopener">Instagram</a><a class="btn btn-line" href="'+tg+'" target="_blank" rel="noopener">Telegram</a></div><p class="dlg-note">'+L('dnote',{d:esc(window.OFFERS_CHECKED||'')})+'</p></div>';
     body.innerHTML=h; dlg.hidden=false; document.documentElement.classList.add('dlg-open');
     dlg.querySelector('.dlg-panel').scrollTop=0; dlg.querySelector('.dlg-x').focus();
     if(push!==false) history.replaceState(null,'','#poezdka-'+id);
@@ -926,7 +979,28 @@ new IntersectionObserver(function(e,o){e.forEach(function(x){if(!x.isIntersectin
     if(e.target.closest('[data-close]')) close();
   });
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!dlg.hidden)close();});
+  onLang(function(){if(!dlg.hidden&&window.__dlgId)open(window.__dlgId,false)});
   var m=location.hash.match(/^#poezdka-(.+)$/); if(m) open(m[1],false);
+})();
+</script>
+
+<script>
+(function(){
+  var h=document.getElementById('ch'),m=document.getElementById('cm'),sec=document.getElementById('cs'),c=document.getElementById('ccount'); if(!h)return;
+  var U={ru:{d:['день','дня','дней'],h:'ч',m:'мин',s:'сек'},de:{d:['Tag','Tage','Tage'],h:'Std.',m:'Min.',s:'Sek.'},en:{d:['day','days','days'],h:'h',m:'min',s:'s'}};
+  function dw(n,f,lang){if(lang==='ru'){var a=n%10,b=n%100;return f[(a===1&&b!==11)?0:(a>=2&&a<=4&&(b<12||b>14))?1:2]}return n===1?f[0]:f[1]}
+  function p2(n){return (n<10?'0':'')+n}
+  var lastS=-1,rot=0;
+  function tick(){
+    var now=new Date(),H=now.getHours(),M=now.getMinutes(),S=now.getSeconds();
+    h.setAttribute('transform','rotate('+((H%12)*30+M*0.5)+' 100 100)');
+    m.setAttribute('transform','rotate('+(M*6+S*0.1)+' 100 100)');
+    if(S!==lastS){ if(lastS>=0){rot+=6}else{rot=S*6} lastS=S; sec.style.transformOrigin='100px 100px'; sec.style.transform='rotate('+rot+'deg)'; }
+    var st=new Date(now.getFullYear(),0,1),diff=Math.floor((now-st)/1000),d=Math.floor(diff/86400),hh=Math.floor(diff%86400/3600),mm=Math.floor(diff%3600/60),ss=diff%60;
+    var L=window.LANG||'ru',u=U[L]||U.ru;
+    c.textContent=d+' '+dw(d,u.d,L)+' '+p2(hh)+' '+u.h+' '+p2(mm)+' '+u.m+' '+p2(ss)+' '+u.s;
+  }
+  tick(); setInterval(tick,250);
 })();
 </script>
 </body>
