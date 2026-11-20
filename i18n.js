@@ -25,6 +25,7 @@ function applyPage(){
   if(!window.__ruTitle){window.__ruTitle=document.title;var md=document.querySelector('meta[name=description]');window.__ruDesc=md&&md.content}
   document.title=lang==='ru'?window.__ruTitle:UI[lang].title;
   var md=document.querySelector('meta[name=description]');if(md)md.content=lang==='ru'?window.__ruDesc:UI[lang].desc;
+  /*legalLinks*/var suf=lang==='ru'?'':'-'+lang;var a1=document.querySelector('[data-i18n="t170"]'),a2=document.querySelector('[data-i18n="t171"]');if(a1)a1.setAttribute('href','impressum'+suf+'.html');if(a2)a2.setAttribute('href','datenschutz'+suf+'.html');
   var tp=document.querySelector('.emblem textPath');if(tp)tp.textContent=L('slogan');
   document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-lang')===lang);b.setAttribute('aria-pressed',b.getAttribute('data-lang')===lang)});
 }
