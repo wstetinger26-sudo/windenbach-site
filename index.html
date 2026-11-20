@@ -411,6 +411,9 @@ details summary::after,summary::after{color:var(--gold2)}
 .offer .stub::before,.offer .stub::after{background:var(--bg2)}
 .offer .go{background:var(--goldg)!important;color:#1A1406!important}
 .small-note{color:var(--muted)}
+/* Bordkarte nicht über dem Gesicht: unten links, Name oben links */
+@media(max-width:860px){.hero-photo{margin-bottom:250px}.pass{right:auto;left:50%;margin-left:-110px;width:220px;top:auto;bottom:-238px}.hero-photo .tag{top:auto;bottom:14px}}
+@media(min-width:861px){.pass{right:auto;left:-30px;top:auto;bottom:-120px}.hero-photo .tag{bottom:auto;top:16px}.hero{padding-bottom:120px}}
 /* poster */
 .poster{background:var(--bg)!important}
 .poster::before{background:radial-gradient(560px 380px at 85% 20%,rgba(212,175,55,.10),transparent 70%)}
