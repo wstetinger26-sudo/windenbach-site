@@ -417,6 +417,16 @@ details summary::after,summary::after{color:var(--gold2)}
 @media(max-width:860px){.hero-photo{margin-bottom:250px}.pass{right:auto;left:50%;margin-left:-110px;width:220px;top:auto;bottom:-238px}.hero-photo .tag{top:auto;bottom:14px}}
 @media(min-width:861px){.pass{right:auto;left:-30px;top:auto;bottom:-120px}.hero-photo .tag{bottom:auto;top:16px}.hero{padding-bottom:120px}}
 /* mood strip */
+.goal{display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:center;margin-top:30px;max-width:760px;border:1px solid var(--line);border-radius:22px;padding:20px 24px;background:rgba(212,175,55,.04)}
+.goal .gnum b{display:block;font-family:"Cormorant Garamond",serif;font-size:54px;line-height:1;background:var(--goldg);-webkit-background-clip:text;background-clip:text;color:transparent}
+.goal .gnum span{font-size:13px;color:var(--muted)}
+.goal .gr{text-align:right}
+.goal .gbar{position:relative;height:10px;border-radius:99px;background:rgba(212,175,55,.12);overflow:visible}
+.goal .gbar i{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:99px;background:var(--goldg);transition:width 2.2s cubic-bezier(.2,.7,.2,1)}
+.goal.in .gbar i{width:26%}
+.goal .gbar em{position:absolute;right:0;top:-24px;font-style:normal;font-size:12px;color:var(--gold2);letter-spacing:.08em}
+@media(max-width:560px){.goal{grid-template-columns:1fr 1fr;gap:14px}.goal .gbar{grid-column:1/-1;order:3}.goal .gnum b{font-size:44px}.goal .gbar em{display:none}}
+
 .mood{padding:90px 0 80px;overflow:hidden}
 .mstrip{margin-top:38px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
 .mtrack{display:flex;gap:16px;width:max-content;animation:mscroll 60s linear infinite}
@@ -564,8 +574,13 @@ details summary::after,summary::after{color:var(--gold2)}
     <div class="eyebrow rv">Вдохновение</div>
     <h2 class="rv">Мир, <em>который ждёт</em></h2>
     <p class="lead rv">Места, куда хочется поехать. С клубом многие из них стали ближе, чем казалось.</p>
+    <div class="goal rv" id="goal">
+      <div class="gnum"><b data-to="13">0</b><span>стран я уже увидел</span></div>
+      <div class="gbar"><i></i><em>13 / 50</em></div>
+      <div class="gnum gr"><b>50</b><span>моя мечта</span></div>
+    </div>
   </div>
-  <div class="mstrip" aria-label="Фотографии путешествий"><div class="mtrack"><figure><img src="img/mood_fluegel.jpg" alt="Над облаками"><figcaption>Над облаками</figcaption></figure><figure><img src="img/mood_markt.jpg" alt="Плавучий рынок · Таиланд"><figcaption>Плавучий рынок · Таиланд</figcaption></figure><figure><img src="img/mood_kappadokien.jpg" alt="Каппадокия · Турция"><figcaption>Каппадокия · Турция</figcaption></figure><figure><img src="img/mood_pool.jpg" alt="Пальмы и океан"><figcaption>Пальмы и океан</figcaption></figure><figure><img src="img/mood_laptop.jpg" alt="Работать с видом на море"><figcaption>Работать с видом на море</figcaption></figure><figure><img src="img/mood_fenster.jpg" alt="Следующий рейс"><figcaption>Следующий рейс</figcaption></figure><div class="dup" aria-hidden="true"><figure><img src="img/mood_fluegel.jpg" alt="Над облаками"><figcaption>Над облаками</figcaption></figure><figure><img src="img/mood_markt.jpg" alt="Плавучий рынок · Таиланд"><figcaption>Плавучий рынок · Таиланд</figcaption></figure><figure><img src="img/mood_kappadokien.jpg" alt="Каппадокия · Турция"><figcaption>Каппадокия · Турция</figcaption></figure><figure><img src="img/mood_pool.jpg" alt="Пальмы и океан"><figcaption>Пальмы и океан</figcaption></figure><figure><img src="img/mood_laptop.jpg" alt="Работать с видом на море"><figcaption>Работать с видом на море</figcaption></figure><figure><img src="img/mood_fenster.jpg" alt="Следующий рейс"><figcaption>Следующий рейс</figcaption></figure></div></div></div>
+  <div class="mstrip" aria-label="Фотографии путешествий"><div class="mtrack"><figure><img src="img/mood_fluegel.jpg" alt="Над облаками"><figcaption>Над облаками</figcaption></figure><figure><img src="img/mood_phiphi.jpg" alt="Пхи-Пхи · Таиланд"><figcaption>Пхи-Пхи · Таиланд</figcaption></figure><figure><img src="img/mood_kappadokien.jpg" alt="Каппадокия · Турция"><figcaption>Каппадокия · Турция</figcaption></figure><figure><img src="img/mood_pool.jpg" alt="Пальмы и океан"><figcaption>Пальмы и океан</figcaption></figure><figure><img src="img/mood_strandlaptop.jpg" alt="Работать с видом на море"><figcaption>Работать с видом на море</figcaption></figure><figure><img src="img/mood_fenster.jpg" alt="Следующий рейс"><figcaption>Следующий рейс</figcaption></figure><div class="dup" aria-hidden="true"><figure><img src="img/mood_fluegel.jpg" alt="Над облаками"><figcaption>Над облаками</figcaption></figure><figure><img src="img/mood_phiphi.jpg" alt="Пхи-Пхи · Таиланд"><figcaption>Пхи-Пхи · Таиланд</figcaption></figure><figure><img src="img/mood_kappadokien.jpg" alt="Каппадокия · Турция"><figcaption>Каппадокия · Турция</figcaption></figure><figure><img src="img/mood_pool.jpg" alt="Пальмы и океан"><figcaption>Пальмы и океан</figcaption></figure><figure><img src="img/mood_strandlaptop.jpg" alt="Работать с видом на море"><figcaption>Работать с видом на море</figcaption></figure><figure><img src="img/mood_fenster.jpg" alt="Следующий рейс"><figcaption>Следующий рейс</figcaption></figure></div></div></div>
 </section>
 
 <!-- POSTER -->
@@ -814,6 +829,11 @@ details summary::after,summary::after{color:var(--gold2)}
     c.style.cursor='pointer';
   });
 })();
+</script>
+
+<script>
+(function(){var g=document.getElementById('goal');if(!g)return;var b=g.querySelector('[data-to]'),done=0;
+new IntersectionObserver(function(e,o){e.forEach(function(x){if(!x.isIntersecting||done)return;done=1;g.classList.add('in');var t=+b.dataset.to,i=0,st=setInterval(function(){i++;b.textContent=i;if(i>=t)clearInterval(st)},120);o.disconnect()})},{threshold:.4}).observe(g);})();
 </script>
 </body>
 </html>
