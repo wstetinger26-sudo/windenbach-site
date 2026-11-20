@@ -504,6 +504,11 @@ html.dlg-open{overflow:hidden}
 .ccount{margin:6px 0 18px;color:var(--muted);font-size:15px}
 .ccount b{display:block;font-family:Manrope,sans-serif;font-variant-numeric:tabular-nums;font-size:clamp(26px,4vw,40px);font-weight:700;background:var(--goldg);-webkit-background-clip:text;background-clip:text;color:transparent;margin-top:4px}
 @media(max-width:860px){.clockgrid{grid-template-columns:1fr;gap:30px;text-align:center}.clockface{max-width:240px;margin:0 auto}.clocktext .lead{margin-left:auto;margin-right:auto}}
+/* update notice */
+.upd{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:99px;padding:8px 16px;margin:4px 0 22px;color:var(--gold2);font-size:13px;font-weight:600;background:rgba(212,175,55,.06)}
+.upd-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 0 rgba(212,175,55,.6);animation:updp 2s infinite}
+@keyframes updp{0%{box-shadow:0 0 0 0 rgba(212,175,55,.55)}70%{box-shadow:0 0 0 9px rgba(212,175,55,0)}100%{box-shadow:0 0 0 0 rgba(212,175,55,0)}}
+.dlg-price .o{color:var(--muted);text-decoration:line-through;font-size:15px;margin-bottom:2px}
 /* poster */
 .poster{background:var(--bg)!important}
 .poster::before{background:radial-gradient(560px 380px at 85% 20%,rgba(212,175,55,.10),transparent 70%)}
@@ -692,7 +697,8 @@ html.dlg-open{overflow:hidden}
   <div class="wrap">
     <div data-i18n="t106" class="eyebrow">Свежие предложения клуба</div>
     <h2 data-i18n="t107">Что сейчас <em>можно забронировать</em></h2>
-    <p data-i18n="t108" class="lead">Реальные цены участников на 5-звёздочные отели и поездки клуба. Я обновляю подборку каждые две недели.</p>
+    <p data-i18n="t108" class="lead">Реальные цены участников на 5-звёздочные отели и поездки клуба, проверенные на моём аккаунте.</p>
+    <div class="upd rv"><span class="upd-dot"></span><span id="upd-text"></span></div>
     <div class="ofilter" role="tablist">
       <button data-i18n="t109" class="on" data-f="all">Все</button>
       <button data-i18n="t110" data-f="hotel">Отели 5★</button>
@@ -958,7 +964,7 @@ new IntersectionObserver(function(e,o){e.forEach(function(x){if(!x.isIntersectin
   function open(id,push){
     var d=trD(id),o=O.filter(function(x){return x.id===id})[0]; if(!d||!o) return; window.__dlgId=id;
     var h='<div class="dlg-hero"'+(o.img?' style="background-image:url('+o.img+')"':'')+'><div class="dlg-hero-in"><span class="dlg-badge">'+esc(o.badge?tr(o,'badge'):'')+'</span><h2 id="dlg-title">'+esc(tr(o,'name'))+'</h2><div class="dlg-where">'+esc(tr(o,'country')+' · '+tr(o,'place'))+'</div></div></div>';
-    h+='<div class="dlg-price"><div><div class="n">'+money(o.price)+'</div><div class="s">'+esc(tr(o,'per')||'')+'</div></div>'+(o.pts?'<div class="sv">'+L('ptsLong',{n:num(o.pts)})+'</div>':'')+'</div>';
+    h+='<div class="dlg-price"><div>'+(o.old?'<div class="o">'+money(o.old)+'</div>':'')+'<div class="n">'+money(o.price)+'</div><div class="s">'+esc(o.old?L('member'):(tr(o,'per')||''))+'</div></div>'+(o.old?'<div class="sv">'+L('psave',{x:money(o.old-o.price)})+'</div>':'')+(o.pts?'<div class="sv">'+L('ptsLong',{n:num(o.pts)})+'</div>':'')+'</div>';
     h+='<p class="dlg-intro">'+esc(d.intro)+'</p>';
     h+='<h3>'+L('facts')+'</h3>'+li(d.facts,'dlg-facts');
     h+='<div class="dlg-two"><div><h3>'+L('incl')+'</h3>'+li(d.incl,'dlg-yes')+'</div><div><h3>'+L('excl')+'</h3>'+li(d.excl,'dlg-no')+'</div></div>';
@@ -1001,6 +1007,21 @@ new IntersectionObserver(function(e,o){e.forEach(function(x){if(!x.isIntersectin
     c.textContent=d+' '+dw(d,u.d,L)+' '+p2(hh)+' '+u.h+' '+p2(mm)+' '+u.m+' '+p2(ss)+' '+u.s;
   }
   tick(); setInterval(tick,250);
+})();
+</script>
+
+<script>
+(function(){
+  var el=document.getElementById('upd-text'); if(!el) return;
+  function render(){
+    var lang=window.LANG||'ru',loc=lang==='en'?'en-GB':(lang==='de'?'de-DE':'ru-RU');
+    var now=new Date(),y=now.getFullYear(),m=now.getMonth(),d=now.getDate(),next;
+    if(d<15) next=new Date(y,m,15); else next=new Date(y,m+1,1);
+    var c=(window.OFFERS_CHECKED||'').split('.'),chk=c.length===3?new Date(+c[2],+c[1]-1,+c[0]):null;
+    var f=function(x){return x.toLocaleDateString(loc,{day:'numeric',month:'long'})};
+    el.textContent=L('upd',{d:chk?f(chk):'',n:f(next)});
+  }
+  render(); onLang(render);
 })();
 </script>
 </body>
