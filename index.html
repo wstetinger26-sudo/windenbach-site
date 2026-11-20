@@ -249,7 +249,7 @@ section{position:relative}
 .offer .img{height:200px;position:relative;overflow:hidden;background:linear-gradient(135deg,#E9D6A8,#B08A3E)}
 .offer .img img{width:100%;height:100%;object-fit:cover;transition:transform .8s}
 .offer:hover .img img{transform:scale(1.08)}
-.offer .img .ph{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff;font-family:"Cormorant Garamond",serif;font-size:38px;text-shadow:0 2px 12px rgba(0,0,0,.2)}
+.offer .img .ph{padding:0 16px;text-align:center;font-size:28px!important;line-height:1.15;position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff;font-family:"Cormorant Garamond",serif;font-size:38px;text-shadow:0 2px 12px rgba(0,0,0,.2)}
 .offer .img .ph small{font-family:Manrope;font-size:12px;letter-spacing:.2em;text-transform:uppercase;opacity:.9}
 .offer .disc{position:absolute;right:12px;top:12px;background:#C0392B;color:#fff;font-weight:800;border-radius:999px;padding:6px 12px;font-size:14px;animation:pulse 2.4s ease-in-out infinite}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
@@ -273,6 +273,161 @@ section{position:relative}
 .offer .go{display:block;text-align:center;padding:12px;background:linear-gradient(135deg,#D6B46E,var(--gold));color:#fff;font-weight:700;font-size:14px}
 @media(max-width:960px){.offers{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.offers{grid-template-columns:1fr}}
+
+/* ===== POSTER „Главное предложение“ ===== */
+.poster{background:var(--ink);color:#F2F2F5;padding:90px 0;position:relative;overflow:hidden}
+.poster::before{content:"";position:absolute;inset:0;background:radial-gradient(520px 360px at 85% 20%,rgba(255,46,147,.16),transparent 70%),radial-gradient(520px 360px at 10% 90%,rgba(60,255,143,.12),transparent 70%);pointer-events:none}
+.pgrid{display:grid;grid-template-columns:minmax(0,480px) 1fr;gap:56px;align-items:center;position:relative}
+.pcard{position:relative;aspect-ratio:3/4;border-radius:26px;overflow:hidden;container-type:inline-size;box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 1px rgba(201,162,39,.45)}
+.pcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.pcard .fg{z-index:3}
+.pcard .word{position:absolute;left:0;right:0;z-index:2;text-align:center;font-family:Manrope,sans-serif;font-weight:700;color:#fff;line-height:.8;letter-spacing:-.02em;text-shadow:0 6px 30px rgba(0,0,0,.18);transform:translateY(40px);opacity:0;transition:transform 1.2s cubic-bezier(.2,.7,.2,1),opacity 1.2s}
+.pcard.in .word{transform:none;opacity:1}
+.pcard .pre{position:absolute;top:7%;left:0;right:0;z-index:2;text-align:center;font-family:"Cormorant Garamond",serif;font-style:italic;font-size:7cqw;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.25)}
+.pcard .pfly{position:absolute;inset:0;z-index:4;pointer-events:none}
+.pcard .pfly path{fill:none;stroke:#fff;stroke-width:2.2;stroke-dasharray:7 9;opacity:.9}
+.pcard .pfly .pl{color:var(--pink)}
+.pcard .pill{position:absolute;z-index:5;left:50%;bottom:6%;transform:translateX(-50%);white-space:nowrap;background:var(--neon);color:#0E0F12;font-weight:700;font-size:4.2cqw;letter-spacing:.04em;padding:2.4cqw 5cqw;border-radius:99px;box-shadow:0 8px 26px rgba(60,255,143,.45)}
+.pcard .pdisc{position:absolute;z-index:5;top:5%;right:5%;width:19cqw;height:19cqw;border-radius:50%;background:var(--pink);color:#fff;display:grid;place-items:center;font-weight:700;font-size:6cqw;transform:rotate(-12deg);box-shadow:0 8px 24px rgba(255,46,147,.5)}
+.pinfo .eyebrow{color:var(--neon)}
+.poster .pinfo h2{color:#fff!important;margin-bottom:6px}
+.pinfo .pwhere{color:#B9B9C3;margin-bottom:26px}
+.pbox{border:2px dashed rgba(201,162,39,.7);border-radius:22px;padding:22px 22px 18px}
+.pic{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center;margin-bottom:20px}
+.pic div{font-size:13px;color:#C9C9D1;line-height:1.3}
+.pic svg{width:34px;height:34px;display:block;margin:0 auto 8px;color:var(--neon)}
+.pic b{display:block;color:#fff;font-size:14px}
+.pprice{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.1);padding-top:16px}
+.pprice .o{color:#8E8E98;text-decoration:line-through;font-size:16px}
+.pprice .n{font-family:Manrope,sans-serif;font-weight:700;font-size:42px;color:var(--gold);line-height:1}
+.pprice .s{font-size:13px;color:#B9B9C3;margin-top:4px}
+.pprice .sv{background:rgba(255,46,147,.14);color:var(--pink);border:1px solid var(--pink);border-radius:99px;padding:8px 16px;font-weight:700;font-size:14px}
+.pinfo .btn{margin-top:22px}
+.pinfo .pnote{font-size:12px;color:#8E8E98;margin-top:14px}
+@media (max-width:860px){.pgrid{grid-template-columns:1fr;gap:34px}.pcard{max-width:460px;margin:0 auto;width:100%}.pic{grid-template-columns:repeat(2,1fr);row-gap:18px}.poster{padding:64px 0}}
+
+/* ===== THEME: Schwarz + Bronze-Gold (wie Alena, dunkler Modus) ===== */
+:root{
+  --bg:#0B0A08; --bg2:#13110D; --card:#17140F; --ink:#0B0A08; --ink2:#15130F;
+  --text:#F2EBDD; --muted:#ADA594;
+  --gold:#D4AF37; --gold2:#E8C766; --goldl:#F4DE97; --line:rgba(212,175,55,.28);
+  --neon:#E8C766; --pink:#D4AF37;
+  --goldg:linear-gradient(150deg,#F4DE97 0%,#E2C060 35%,#D2AA42 60%,#B98F30 100%);
+}
+body{background:var(--bg);color:var(--text)}
+h1,h2,h3{color:var(--text)}
+h2 em,h1 em,.life h3 em{font-style:italic;background:var(--goldg);-webkit-background-clip:text;background-clip:text;color:transparent!important}
+.eyebrow{color:var(--gold)}
+.lead,.about p,.card p,.step p,details p,.life p,.timeline div{color:var(--muted)}
+.about p strong{color:var(--text)}
+/* buttons */
+.btn-gold{background:var(--goldg)!important;color:#1A1406!important;box-shadow:0 0 0 1px rgba(212,175,55,.35),0 10px 28px rgba(212,175,55,.22)}
+.btn-gold:hover{box-shadow:0 0 0 1px rgba(232,199,102,.6),0 12px 34px rgba(212,175,55,.35)}
+.btn-line{border:1px solid var(--gold);color:var(--gold2);background:transparent}
+.btn-line:hover{background:rgba(212,175,55,.1)}
+/* header */
+header{background:rgba(11,10,8,.88);border-bottom:1px solid var(--line)}
+.brand{color:var(--text)}.menu{color:var(--muted)}.menu a:hover{color:var(--gold2)}
+/* sections */
+.hero,#start,#book,.final,footer,.ticker,.alt,section{background:transparent}
+.hero{background:radial-gradient(900px 520px at 85% 15%,rgba(212,175,55,.10),transparent 70%),var(--bg)!important}
+.alt{background:var(--bg2)!important}
+footer{background:var(--bg2)!important;color:var(--muted);border-top:1px solid var(--line)}
+footer a:hover{color:var(--gold2)}
+.hero p{color:var(--muted)}
+.chip{color:var(--gold2);border-color:var(--line);background:rgba(212,175,55,.06)}
+.flight path{stroke:var(--gold);opacity:.55}.flight .pl{color:var(--gold2)}
+.hero-photo,.hero-photo .ph{border-color:var(--line);box-shadow:0 30px 70px rgba(0,0,0,.6)}
+.hero-photo .tag{background:rgba(11,10,8,.82);color:var(--text);border-color:var(--line)}
+.hero-photo .tag b{color:var(--gold2)}
+/* boarding pass */
+.pass{background:var(--card);box-shadow:0 24px 50px rgba(0,0,0,.6);border:1px solid var(--line)}
+.pass .top{background:var(--ink2)!important;color:var(--gold2);border-bottom:1px solid var(--line)}
+.pass .route b,.pass .grid span{color:var(--text)}
+.pass .route small,.pass .grid small{color:var(--muted)}
+.pass .route .mid{color:var(--gold)}
+.pass .bar{background:repeating-linear-gradient(90deg,#F2EBDD 0 2px,transparent 2px 4px,#F2EBDD 4px 5px,transparent 5px 8px)}
+/* ticker */
+.ticker{background:#000!important;color:var(--gold2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.ticker i{color:var(--gold)}
+/* about / life */
+.about .photo{border-color:var(--line);box-shadow:0 24px 50px rgba(0,0,0,.55)}
+.timeline{border-left-color:var(--line)}
+.timeline div::before{background:var(--gold)}
+.timeline b{color:var(--gold2)}
+.life{background:linear-gradient(135deg,#17140F,#100E0B)!important;border-color:var(--line)}
+.life-words .w{color:var(--text)}
+.life-words s{color:var(--muted)}
+.life-words s::after{background:var(--gold)}
+.life-words i{color:var(--gold2)}
+/* cards */
+.card,.list,.tile,.ticket,.offer{background:var(--card)!important;border:1px solid var(--line)}
+.card:hover{box-shadow:0 20px 44px rgba(0,0,0,.6)}
+.card .more{color:var(--text)}
+.ico{background:transparent;border-color:var(--gold);color:var(--gold2)}
+.plus{background:transparent;border-color:var(--gold);color:var(--gold2)}
+.plus:hover{background:var(--gold);color:#1A1406}
+.note{background:rgba(212,175,55,.05);border-color:var(--gold);color:var(--muted)}
+.note b{color:var(--gold2)}
+.list li{color:var(--muted);border-bottom-color:rgba(212,175,55,.12)}
+.list li::before{color:var(--gold2);text-shadow:none}
+.deco{color:var(--gold);opacity:.12}
+/* steps */
+.step{border-top-color:var(--gold)}
+.step::before{color:var(--gold2)}
+.steps-line .pl{color:var(--gold2)}
+.code{background:transparent!important;color:var(--gold2)!important;border-color:var(--gold)!important}
+/* gallery */
+.gallery figure{box-shadow:0 14px 30px rgba(0,0,0,.55)}
+.gallery figcaption{background:rgba(11,10,8,.82);color:var(--gold2);border-color:var(--line)}
+/* book */
+.cover{box-shadow:0 30px 60px rgba(0,0,0,.7)}
+/* faq */
+details{border-bottom-color:var(--line)}
+summary{color:var(--text)}
+details summary::after,summary::after{color:var(--gold2)}
+/* final */
+.final-bg::after{background:rgba(11,10,8,.55)!important}
+.final .glass,.glass{background:rgba(11,10,8,.78);border-color:var(--gold);color:var(--text)}
+.final h2{color:var(--text)}
+.final .lead{color:var(--muted)}
+.fly{color:var(--gold2)!important}
+/* offers */
+.ofilter button{background:transparent;color:var(--muted);border-color:var(--line)}
+.ofilter button.on,.ofilter button:hover{background:var(--goldg);color:#1A1406;border-color:transparent}
+.offer:hover{box-shadow:0 26px 50px rgba(0,0,0,.65)}
+.offer .img{background:linear-gradient(135deg,#2A2418,#0B0A08)}
+.offer .img .ph{color:var(--gold2)}
+.offer .img .ph small{color:var(--muted)}
+.offer .disc{background:var(--goldg);color:#1A1406}
+.offer .tag{background:rgba(11,10,8,.82);color:var(--gold2)}
+.offer .status{background:rgba(11,10,8,.85);color:var(--gold2);border:1px solid var(--line)}
+.offer .where{color:var(--gold)}
+.offer h3,.offer .now,.offer .meta b{color:var(--text)}
+.offer .old,.offer .meta,.offer .per{color:var(--muted)}
+.offer .save{color:var(--gold2)}
+.offer .score{background:transparent;border:1px solid var(--gold);color:var(--gold2)}
+.offer .stub{border-top-color:var(--line)}
+.offer .stub::before,.offer .stub::after{background:var(--bg2)}
+.offer .go{background:var(--goldg)!important;color:#1A1406!important}
+.small-note{color:var(--muted)}
+/* poster */
+.poster{background:var(--bg)!important}
+.poster::before{background:radial-gradient(560px 380px at 85% 20%,rgba(212,175,55,.10),transparent 70%)}
+.pcard{box-shadow:0 30px 80px rgba(0,0,0,.7),0 0 0 1px rgba(212,175,55,.5)}
+.pcard .pfly .pl{color:#fff}
+.pcard .pill{background:var(--goldg);color:#1A1406;box-shadow:0 8px 26px rgba(0,0,0,.4)}
+.pcard .pdisc{background:var(--goldg);color:#1A1406;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.pinfo .eyebrow{color:var(--gold)}
+.poster .pinfo h2{color:var(--text)!important}
+.pinfo .pwhere{color:var(--muted)}
+.pbox{border-color:rgba(212,175,55,.6)}
+.pic svg{color:var(--gold2)}
+.pic b{color:var(--text)}
+.pic div{color:var(--muted)}
+.pprice{border-top-color:var(--line)}
+.pprice .n{background:var(--goldg);-webkit-background-clip:text;background-clip:text;color:transparent}
+.pprice .sv{background:rgba(212,175,55,.08);color:var(--gold2);border-color:var(--gold)}
 </style>
 </head>
 <body>
@@ -352,7 +507,7 @@ section{position:relative}
     <div class="rv life">
       <div class="life-text">
         <div class="eyebrow">Как мы живём</div>
-        <h3>Что мы с Ириной <em>убрали</em> из своей жизни</h3>
+        <h3>Что мы с женой <em>убрали</em> из своей жизни</h3>
         <p>Это не правила и не диета. Это наш выбор. Долго вокруг нас не было людей, которые живут так же — сейчас они есть.</p>
       </div>
       <div class="life-words">
@@ -381,6 +536,45 @@ section{position:relative}
       <div class="card rv"><button class="plus" aria-label="Подробнее">+</button><div class="ico">⌂</div><h3>Партнёрская часть</h3><p>Клубом можно просто пользоваться. А можно рассказывать о нём другим — как это устроено, объясню лично.</p><div class="more">Это по желанию. Никаких обещаний дохода — я расскажу только то, что делаю сам, и вы решите, нужно ли это вам.</div></div>
     </div>
     <div class="rv note"><b>Важно:</b> я не турагентство и не продаю поездки. Я показываю, как устроен клуб и как в него попасть. Бронировать по этим ценам может только участник.</div>
+  </div>
+</section>
+
+
+<!-- POSTER -->
+<section class="poster" id="poster" style="display:none">
+  <div class="wrap pgrid">
+    <div class="pcard" id="pcard">
+      <img id="p-bg" alt="">
+      <div class="pre" id="p-pre"></div>
+      <div class="word" id="p-word"></div>
+      <img class="fg" id="p-fg" alt="" aria-hidden="true">
+      <svg class="pfly" viewBox="0 0 300 400" preserveAspectRatio="none" aria-hidden="true">
+        <path id="pfp" d="M-10 150 C 60 70, 140 190, 200 110 S 290 40, 320 60"/>
+        <g class="pl"><path d="M0 -7 L4 0 L0 7 L-1 1 L-9 3 L-9 -3 L-1 -1 Z" fill="currentColor" stroke="none" transform="rotate(0)"/>
+          <animateMotion dur="9s" repeatCount="indefinite" rotate="auto"><mpath href="#pfp"/></animateMotion></g>
+      </svg>
+      <span class="pdisc" id="p-disc"></span>
+      <span class="pill">Цена для участников клуба</span>
+    </div>
+    <div class="pinfo">
+      <div class="eyebrow">Главное предложение подборки</div>
+      <h2 id="p-name"></h2>
+      <div class="pwhere" id="p-where"></div>
+      <div class="pbox">
+        <div class="pic">
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6M8 10h.01M12 10h.01M16 10h.01"/></svg><b id="p-stars"></b>отель</div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg><b id="p-nights"></b>2 взрослых</div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><b id="p-dates"></b>даты</div>
+          <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg><b id="p-rate"></b>оценка гостей</div>
+        </div>
+        <div class="pprice">
+          <div><div class="o" id="p-old"></div><div class="n" id="p-now"></div><div class="s">за номер на 7 ночей, с налогами</div></div>
+          <div class="sv" id="p-save"></div>
+        </div>
+      </div>
+      <a class="btn btn-gold" href="https://ig.me/m/wladimirwindenbach" target="_blank" rel="noopener">Хочу так же — написать «РАЗГОВОР»</a>
+      <p class="pnote" id="p-note"></p>
+    </div>
   </div>
 </section>
 
@@ -526,6 +720,30 @@ section{position:relative}
 <script src="offers.js"></script>
 <script>
 (function(){
+  var P=window.POSTER,O=window.OFFERS; if(!P||!O||!O[P.idx||0]) return;
+  var o=O[P.idx||0], $=function(i){return document.getElementById(i)};
+  function eur(n){return n.toLocaleString('ru-RU').replace(/,/g,' ')+' €'}
+  var img=P.img||o.img; if(!img) return;
+  $('p-bg').src=img; $('p-bg').alt=o.place;
+  if(P.clip){$('p-fg').src=img;$('p-fg').style.clipPath=P.clip;$('p-fg').style.webkitClipPath=P.clip}else{$('p-fg').remove()}
+  var w=$('p-word'); w.textContent=P.title||o.country.toUpperCase();
+  w.style.bottom=(P.bottom||40)+'%'; w.style.fontSize=(P.size||17)+'cqw';
+  $('p-pre').textContent=P.pre||'Отдых мечты';
+  var pct=o.pct||(o.old?Math.round((1-o.price/o.old)*100):0);
+  if(pct){$('p-disc').textContent='−'+pct+'%'}else{$('p-disc').remove()}
+  $('p-name').textContent=o.name; $('p-where').textContent=o.country+' · '+o.place;
+  $('p-stars').textContent=(o.stars||5)+'★'; $('p-nights').textContent=(o.note||'').split('·')[0].trim();
+  $('p-dates').textContent=o.dates; $('p-rate').textContent=o.rating||'—';
+  if(o.old){$('p-old').textContent=eur(o.old);$('p-save').textContent='экономия '+eur(o.old-o.price)}else{$('p-save').remove()}
+  $('p-now').textContent=eur(o.price);
+  $('p-note').textContent='Цена на '+window.OFFERS_CHECKED+', зависит от дат и наличия мест. Бронирование доступно только участникам клуба.';
+  $('poster').style.display='';
+  new IntersectionObserver(function(e,ob){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');ob.disconnect()}})},{threshold:.3}).observe($('pcard'));
+})();
+</script>
+
+<script>
+(function(){
   var box=document.getElementById('offers'); if(!box||!window.OFFERS) return;
   function eur(n){return n.toLocaleString('ru-RU').replace(/,/g,' ')+' €'}
   var ig='https://ig.me/m/wladimirwindenbach';
@@ -536,7 +754,7 @@ section{position:relative}
     var top=o.type==='hotel'?'<div class="starsr">'+'★'.repeat(o.stars)+'<span class="score">'+o.rating+'</span></div>':'';
     var price=o.old
       ? '<div><div class="old">'+eur(o.old)+'</div><div class="now">'+eur(o.price)+'</div><div class="per">для участника, с налогами</div></div><div class="save">экономия<b>'+eur(o.old-o.price)+'</b></div>'
-      : '<div><div class="now">'+eur(o.price)+'</div><div class="per">'+o.per+'</div></div>';
+      : '<div><div class="now">'+eur(o.price)+'</div><div class="per">'+o.per+'</div></div>'+(o.pts?'<div class="save">можно оплатить<b>до '+o.pts.toLocaleString('ru-RU').replace(/,/g,' ')+' баллов</b></div>':'');
     return '<article class="offer rv" data-type="'+o.type+'"><div class="img">'+img+tag+(pct?'<span class="disc">−'+pct+'%</span>':'')+(o.status?'<span class="status">'+o.status+'</span>':'')+'</div>'+
       '<div class="body"><div class="where">'+o.country+' · '+o.place+'</div><h3>'+o.name+'</h3>'+top+'<div class="meta"><b>'+o.dates+'</b> · '+o.note+'</div></div>'+
       '<div class="stub">'+price+'</div><a class="go" href="'+ig+'" target="_blank" rel="noopener">Хочу так же — написать «РАЗГОВОР»</a></article>';
