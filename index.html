@@ -564,6 +564,19 @@ footer{padding-bottom:96px!important}
 .shr-qr img{width:190px;height:190px;border-radius:16px;display:block;margin:0 auto 14px;box-shadow:0 0 0 1px rgba(226,192,96,.5),0 14px 34px rgba(0,0,0,.5)}
 .shr-qr a{color:var(--gold2);font-weight:700;font-size:14px;text-decoration:underline;text-underline-offset:3px}
 .dlg-cta .btn-share{margin-top:10px}
+/* why: three points */
+#why{padding:84px 0 70px}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+.why{position:relative;padding:34px 28px 30px;border-radius:24px;border:1px solid var(--line);background:linear-gradient(160deg,rgba(226,192,96,.08),rgba(255,255,255,.015) 55%);overflow:hidden}
+.why::before{content:"";position:absolute;left:28px;right:28px;top:0;height:2px;background:var(--goldg);opacity:.8}
+.why .big{font:600 clamp(46px,5.4vw,62px)/1 "Cormorant Garamond",serif;background:var(--goldg);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:10px;white-space:nowrap}
+.why .wico{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(226,192,96,.6);color:#E2C060;margin-bottom:14px}
+.why .wico svg{width:30px;height:30px}
+.why h3{font-size:24px;line-height:1.2;margin:0 0 10px;color:var(--text)}
+.why p{color:var(--muted);font-size:15.5px;margin:0}
+.why b{color:var(--gold2);font-weight:700}
+.why .big.txt{font-size:clamp(38px,3.7vw,46px);white-space:normal;line-height:1.05}
+@media(max-width:860px){.why-grid{grid-template-columns:1fr}.why{padding:28px 24px}}
 /* poster */
 .poster{background:var(--bg)!important}
 .poster::before{background:radial-gradient(560px 380px at 85% 20%,rgba(212,175,55,.10),transparent 70%)}
@@ -636,6 +649,30 @@ footer{padding-bottom:96px!important}
 </section>
 
 <div class="ticker" aria-hidden="true"><div class="t"><span data-i18n="t030">Время пришло</span><i>✈</i><span data-i18n="t031">Свобода выбора</span><i>✈</i><span data-i18n="t032">Путешествия</span><i>✈</i><span data-i18n="t033">Люди рядом</span><i>✈</i><span data-i18n="t034">Италия</span><i>✈</i><span data-i18n="t035">Новая глава</span><i>✈</i><span data-i18n="t036">Разговор</span><i>✈</i><span data-i18n="t037">Время пришло</span><i>✈</i><span data-i18n="t038">Свобода выбора</span><i>✈</i><span data-i18n="t039">Путешествия</span><i>✈</i><span data-i18n="t040">Люди рядом</span><i>✈</i><span data-i18n="t041">Италия</span><i>✈</i><span data-i18n="t042">Новая глава</span><i>✈</i><span data-i18n="t043">Разговор</span><i>✈</i></div></div>
+
+<!-- WHY: three points -->
+<section id="why">
+  <div class="wrap">
+    <div class="eyebrow" id="w_e">Коротко о главном</div>
+    <h2 id="w_h">Три вещи, <em>которые важно знать</em></h2>
+    <div class="why-grid">
+      <div class="why rv"><div class="big txt" id="w1n">Ищу лидеров</div><h3 id="w1h">которые хотят пройти этот путь вместе со мной</h3><p id="w1p"></p></div>
+      <div class="why rv"><div class="wico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.6-3.4 3-5.2 6-5.2s5.4 1.8 6 5.2"/><circle cx="17" cy="9" r="2.6"/><path d="M15.6 14.9c2.6.1 4.6 1.8 5.1 4.6"/></svg></div><h3 id="w2h">Не просто цены, а люди рядом</h3><p id="w2p"></p></div>
+      <div class="why rv"><div class="wico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5.5c0 4.4-3 7.9-7 9.5-4-1.6-7-5.1-7-9.5V6z"/><path d="M8.8 12.2l2.2 2.2 4.4-4.6"/></svg></div><h3 id="w3h">Честно и в вашем темпе</h3><p id="w3p"></p></div>
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  document.addEventListener('DOMContentLoaded',function(){
+  var $=function(i){return document.getElementById(i)}; if(!$('why')) return;
+  function render(){
+    ['w_e','w_h','w1n','w1h','w1p','w2h','w2p','w3h','w3p'].forEach(function(k){$(k).innerHTML=L(k)});
+  }
+  render(); onLang(render);
+  });
+})();
+</script>
 
 <!-- ABOUT -->
 <section id="about">
