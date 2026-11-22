@@ -1112,7 +1112,7 @@ new IntersectionObserver(function(e,o){e.forEach(function(x){if(!x.isIntersectin
 (function(){
   var fab=document.getElementById('sharefab'),box=document.getElementById('shr'); if(!fab||!box) return;
   var $=function(i){return document.getElementById(i)}, cur=null;
-  function link(trip){var lang=window.LANG||'ru',u='https://windenbach.com/'+(lang==='ru'?'':'?lang='+lang);return trip?u+'#poezdka-'+trip:u}
+  function link(trip){var lang=window.LANG||'ru',u='https://windenbach.com/'+(lang==='ru'?'':lang+'/');return trip?u+'#poezdka-'+trip:u}
   function msg(trip){
     if(!trip) return L('shareMsg');
     var o=(window.OFFERS||[]).filter(function(x){return x.id===trip})[0];
