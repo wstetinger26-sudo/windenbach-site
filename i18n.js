@@ -31,7 +31,9 @@ function applyPage(){
 }
 window.setLang=function(lang){if(!UI[lang])return;window.LANG=lang;try{localStorage.setItem(KEY,lang)}catch(e){}
   applyPage();(window.__langHooks||[]).forEach(function(f){try{f()}catch(e){}});
-  var u=new URL(location.href);if(lang==='ru')u.searchParams.delete('lang');else u.searchParams.set('lang',lang);history.replaceState(null,'',u.toString());};
+  langUrl(lang);};
+function langUrl(lang){if(!/^\/(index\.html|de|en)?$/.test(location.pathname))return;var u=new URL(location.href);u.searchParams.delete('lang');u.pathname=lang==='ru'?'/':'/'+lang;history.replaceState(null,'',u.toString())}
+document.addEventListener('DOMContentLoaded',function(){langUrl(window.LANG||'ru')});
 window.onLang=function(f){(window.__langHooks=window.__langHooks||[]).push(f)};
 document.addEventListener('click',function(e){var b=e.target.closest('.lang button');if(b)window.setLang(b.getAttribute('data-lang'))});
 document.addEventListener('DOMContentLoaded',function(){if(window.LANG!=='ru')applyPage();else document.querySelectorAll('.lang button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-lang')==='ru')})});
