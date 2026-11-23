@@ -1194,5 +1194,16 @@ new IntersectionObserver(function(e,o){e.forEach(function(x){if(!x.isIntersectin
   fill(); onLang(fill);
 })();
 </script>
+<script>
+(function(){
+  var B={ru:['https://drive.google.com/file/d/1ReCE-UkjF006wV_vktv7XbdvkiqxT0Pg/view','img/buch_cover.jpg','Обложка книги «Время пришло»'],
+         de:['book/die-zeit-ist-gekommen.pdf','img/buch_cover_de.jpg','Buchcover „Die Zeit ist gekommen“'],
+         en:['book/the-time-has-come.pdf','img/buch_cover_en.jpg','Book cover “The Time Has Come”']};
+  function r(){var b=B[window.LANG]||B.ru,c=document.querySelector('#book a.cover');if(!c)return;
+    c.href=b[0];var i=c.querySelector('img');i.src=b[1];i.alt=b[2];
+    var a=document.querySelector('[data-i18n="t146"]');if(a)a.href=b[0];}
+  document.addEventListener('DOMContentLoaded',function(){r();onLang(r)});
+})();
+</script>
 </body>
 </html>
