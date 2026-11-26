@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Трекер привычек</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  :root{
+    --bg:#0f0f10; --surface:#1b1b1d; --surface2:#242427; --line:#2e2e32;
+    --text:#f4f1ea; --muted:#9b978f; --gold:#d6a94a; --gold-soft:rgba(214,169,74,.14);
+    --ok:#5cbf7f; --ok-soft:rgba(92,191,127,.14); --radius:18px; --red:#e06c5f; --page:#070707;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{background:var(--page);color:var(--text);font-family:-apple-system,"SF Pro Rounded","SF Pro Text",system-ui,sans-serif;
+       min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+  .phone{width:390px;max-width:100%;height:844px;max-height:calc(100vh - 48px);background:var(--bg);border-radius:46px;
+         border:10px solid #1d1d1f;box-shadow:0 30px 80px rgba(0,0,0,.6);overflow:hidden;position:relative;display:flex;flex-direction:column}
+  @media (max-width:440px){body{padding:0}.phone{border:0;border-radius:0;height:100vh;height:100dvh;max-height:none;width:100%}}
+  body.tg{padding:0;background:var(--bg)} body.tg .phone{border:0;border-radius:0;width:100%;height:100vh;height:var(--tg-viewport-stable-height,100vh);max-height:none;box-shadow:none}
+  body.tg .tg-bar{display:none}
+
+  .tg-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 10px;font-size:15px;border-bottom:1px solid var(--line)}
+  .tg-bar .close{color:var(--gold)}
+  .tg-bar .ttl{text-align:center;line-height:1.15}
+  .tg-bar .ttl b{display:block;font-size:16px}
+  .tg-bar .ttl small{color:var(--muted);font-size:12px}
+  .tg-bar .dots{color:var(--gold);font-size:20px;letter-spacing:1px}
+
+  main{flex:1;overflow-y:auto;padding:18px 18px 160px}
+  .screen{display:none}.screen.on{display:block}
+  h1{font-size:26px;font-weight:700;letter-spacing:-.3px}
+  .sub{color:var(--muted);font-size:14px;margin-top:4px}
+
+  .hero{display:flex;align-items:center;gap:18px;background:linear-gradient(135deg,#221d12,#17171a);border:1px solid #3a321f;
+        border-radius:var(--radius);padding:18px;margin:18px 0}
+  .ring{width:84px;height:84px;flex:none;position:relative}
+  .ring svg{transform:rotate(-90deg)}
+  .ring span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px}
+  .hero p{font-size:15px;line-height:1.35}
+  .hero p b{color:var(--gold)}
+
+  .week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:22px}
+  .day{text-align:center;padding:9px 0;border-radius:14px;background:var(--surface);font-size:12px;color:var(--muted);cursor:pointer;border:1px solid transparent}
+  .day b{display:block;font-size:16px;color:var(--text);margin-top:2px}
+  .day i{display:block;width:6px;height:6px;border-radius:50%;margin:6px auto 0;background:var(--line)}
+  .day.full i{background:var(--ok)} .day.part i{background:var(--gold)}
+  .day.future{opacity:.4;cursor:default}
+  .day.today{border-color:var(--gold)}
+  .day.sel{background:var(--gold);color:#1a1408}.day.sel b{color:#1a1408}.day.sel i{background:#1a1408}
+
+  .sec{display:flex;justify-content:space-between;align-items:baseline;margin:6px 2px 10px}
+  .sec h2{font-size:17px}.sec span{color:var(--muted);font-size:13px}
+
+  .habit{display:flex;align-items:center;gap:14px;background:var(--surface);border-radius:var(--radius);padding:14px;margin-bottom:10px;
+         border:1px solid transparent;transition:.2s}
+  .habit.done{border-color:rgba(92,191,127,.35);background:linear-gradient(90deg,var(--ok-soft),var(--surface) 70%)}
+  .emo{width:44px;height:44px;border-radius:14px;background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:22px;flex:none}
+  .hb{flex:1;min-width:0;cursor:pointer}
+  .hb b{display:block;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hb small{color:var(--muted);font-size:13px}
+  .hb small .fire{color:var(--gold)}
+  .check{width:34px;height:34px;border-radius:50%;border:2px solid var(--line);flex:none;display:flex;align-items:center;justify-content:center;
+         cursor:pointer;transition:.2s;font-size:17px;color:transparent;background:none}
+  .habit.done .check{background:var(--ok);border-color:var(--ok);color:#0f0f10}
+
+  .empty{text-align:center;background:var(--surface);border-radius:var(--radius);padding:26px 18px}
+  .empty p{color:var(--muted);font-size:14px;margin:6px 0 14px}
+  .empty .chips{justify-content:center}
+
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
+  .card{background:var(--surface);border-radius:var(--radius);padding:16px}
+  .card b{display:block;font-size:28px;color:var(--gold)}
+  .card small{color:var(--muted);font-size:13px}
+  .heat{background:var(--surface);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+  .heat h3{font-size:15px;margin-bottom:12px}
+  .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+  .grid i{aspect-ratio:1;border-radius:5px;background:var(--surface2)}
+  .grid i.l1{background:rgba(214,169,74,.3)}.grid i.l2{background:rgba(214,169,74,.6)}.grid i.l3{background:var(--gold)}
+  .grid i.fut{background:none;border:1px dashed var(--line)}
+  .bar{display:flex;align-items:center;gap:10px;margin:10px 0;font-size:14px}
+  .bar span:first-child{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar .t{flex:none;width:38%;height:8px;background:var(--surface2);border-radius:8px;overflow:hidden}
+  .bar .t i{display:block;height:100%;background:var(--gold);border-radius:8px}
+  .bar em{font-style:normal;color:var(--muted);width:40px;text-align:right}
+
+  .row{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--surface);padding:15px 16px;font-size:15px;border-bottom:1px solid var(--line)}
+  .group{border-radius:var(--radius);overflow:hidden;margin:16px 0}
+  .group .row:last-child{border-bottom:0}
+  .row span{color:var(--muted);text-align:right}
+  .row.danger{color:var(--red);cursor:pointer;justify-content:center}
+  .avatar{width:74px;height:74px;border-radius:50%;background:var(--gold-soft);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;
+          font-size:30px;font-weight:700;color:var(--gold);margin:6px auto 10px;overflow:hidden}
+  .avatar img{width:100%;height:100%;object-fit:cover}
+  .center{text-align:center}
+
+  .main-btn{position:absolute;left:14px;right:14px;bottom:calc(76px + env(safe-area-inset-bottom));height:52px;border:0;border-radius:14px;background:var(--gold);color:#1a1408;
+            font-size:16px;font-weight:700;cursor:pointer;font-family:inherit}
+  .tabs{position:absolute;left:0;right:0;bottom:0;height:calc(68px + env(safe-area-inset-bottom));background:rgba(15,15,16,.96);border-top:1px solid var(--line);
+        display:grid;grid-template-columns:repeat(3,1fr);padding-bottom:calc(6px + env(safe-area-inset-bottom))}
+  .tab{background:none;border:0;color:var(--muted);font-size:11px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-family:inherit}
+  .tab .ic{font-size:20px;filter:grayscale(1);opacity:.6}
+  .tab.on{color:var(--gold)}.tab.on .ic{filter:none;opacity:1}
+
+  .veil{position:absolute;inset:0;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;transition:.25s}
+  .sheet{position:absolute;left:0;right:0;bottom:0;background:var(--surface);border-radius:24px 24px 0 0;padding:10px 18px calc(24px + env(safe-area-inset-bottom));
+         transform:translateY(110%);transition:.3s cubic-bezier(.2,.8,.2,1);max-height:92%;overflow-y:auto}
+  .open .veil{opacity:1;pointer-events:auto}.open .sheet{transform:none}
+  .grab{width:40px;height:5px;border-radius:5px;background:var(--line);margin:0 auto 14px}
+  .sheet h2{font-size:20px;margin-bottom:6px}
+  .sheet label{display:block;color:var(--muted);font-size:13px;margin:14px 0 6px}
+  .sheet input{width:100%;background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:13px;color:var(--text);font-size:16px;font-family:inherit}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:9px 12px;font-size:14px;cursor:pointer;color:var(--text)}
+  .chip.on{border-color:var(--gold);background:var(--gold-soft);color:var(--gold)}
+  .sheet .main-btn{position:static;width:100%;margin-top:20px}
+  .del{display:block;width:100%;margin-top:10px;background:none;border:0;color:var(--red);font-size:15px;padding:10px;cursor:pointer;font-family:inherit}
+  .hint{color:var(--muted);font-size:12px;margin-top:6px}
+  .dlg{position:absolute;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;padding:24px;z-index:20}
+  .dlg.on{display:flex}
+  .dlg .box{background:var(--surface2);border-radius:18px;padding:20px;max-width:300px;font-size:15px;line-height:1.4}
+  .dlg .btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+  .dlg button{border:0;border-radius:12px;padding:12px;font-size:15px;font-family:inherit;background:var(--surface);color:var(--text);cursor:pointer}
+  .dlg button.red{background:var(--red);color:#fff}
+  .demo{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--gold-soft);color:var(--gold);border-radius:12px;
+        padding:9px 12px;font-size:13px;margin-bottom:14px}
+  [hidden]{display:none!important}
+  .demo button{background:none;border:0;color:var(--gold);text-decoration:underline;font-size:13px;cursor:pointer;font-family:inherit}
+</style>
+</head>
+<body>
+<div class="phone" id="phone">
+  <div class="tg-bar">
+    <span class="close">Закрыть</span>
+    <div class="ttl"><b>Трекер привычек</b><small>предпросмотр в браузере</small></div>
+    <span class="dots">···</span>
+  </div>
+
+  <main>
+    <section class="screen on" id="s-today">
+      <div class="demo" id="demoBar" hidden>Это пример с тестовыми данными<button id="demoClear">Начать с нуля</button></div>
+      <h1 id="hello">Доброе утро</h1>
+      <p class="sub" id="date"></p>
+      <div class="hero">
+        <div class="ring">
+          <svg width="84" height="84"><circle cx="42" cy="42" r="36" stroke="#2e2e32" stroke-width="8" fill="none"/>
+            <circle id="arc" cx="42" cy="42" r="36" stroke="#d6a94a" stroke-width="8" fill="none" stroke-linecap="round"
+                    stroke-dasharray="226.2" stroke-dashoffset="226.2" style="transition:.4s"/></svg>
+          <span id="pct">0%</span>
+        </div>
+        <p id="heroText"></p>
+      </div>
+      <div class="week" id="week"></div>
+      <div class="sec"><h2 id="listTitle">Сегодня</h2><span id="count"></span></div>
+      <div id="list"></div>
+    </section>
+
+    <section class="screen" id="s-stats">
+      <h1>Статистика</h1>
+      <p class="sub">Последние 30 дней</p>
+      <div class="cards">
+        <div class="card"><b id="stBest">0</b><small>лучшая серия, дней</small></div>
+        <div class="card"><b id="stPct">0%</b><small>выполнено за 30 дней</small></div>
+        <div class="card"><b id="stTotal">0</b><small>отметок всего</small></div>
+        <div class="card"><b id="stActive">0</b><small>активных привычек</small></div>
+      </div>
+      <div class="heat"><h3>Последние 5 недель</h3><div class="grid" id="heat"></div></div>
+      <div class="heat"><h3>По привычкам</h3><div id="bars"></div></div>
+    </section>
+
+    <section class="screen" id="s-profile">
+      <div class="avatar" id="ava">🙂</div>
+      <h1 class="center" id="pname">Мой профиль</h1>
+      <p class="sub center" id="psub">Предпросмотр в браузере</p>
+      <div class="group">
+        <div class="row">Данные хранятся<span id="where">в этом браузере</span></div>
+        <div class="row">Напоминания в чат<span id="remind">выключены</span></div>
+        <div class="row">Язык<span>Русский</span></div>
+      </div>
+      <div class="group"><div class="row danger" id="reset">Удалить все данные</div></div>
+    </section>
+  </main>
+
+  <button class="main-btn" id="addBtn">＋ Новая привычка</button>
+
+  <nav class="tabs">
+    <button class="tab on" data-s="s-today"><span class="ic">✅</span>Сегодня</button>
+    <button class="tab" data-s="s-stats"><span class="ic">📊</span>Статистика</button>
+    <button class="tab" data-s="s-profile"><span class="ic">👤</span>Профиль</button>
+  </nav>
+
+  <div class="veil" id="veil"></div>
+  <div class="sheet">
+    <div class="grab"></div>
+    <h2 id="shTitle">Новая привычка</h2>
+    <label>Название</label>
+    <input id="nm" maxlength="40" placeholder="Например: 10 минут растяжки">
+    <label>Иконка</label>
+    <div class="chips" id="emos"></div>
+    <label>Как часто</label>
+    <div class="chips" id="freq">
+      <span class="chip" data-v="d">Каждый день</span><span class="chip" data-v="wd">По будням</span><span class="chip" data-v="w3">3 раза в неделю</span>
+    </div>
+    <label>Напомнить в Telegram</label>
+    <div class="chips" id="time">
+      <span class="chip" data-v="">Без напоминания</span><span class="chip" data-v="07:00">07:00</span><span class="chip" data-v="08:00">08:00</span>
+      <span class="chip" data-v="12:00">12:00</span><span class="chip" data-v="20:00">20:00</span><span class="chip" data-v="custom">Своё время</span>
+    </div>
+    <input type="time" id="tmCustom" value="09:00" hidden style="margin-top:10px">
+    <p class="hint">Бот напишет в чат в это время, если привычка ещё не отмечена.</p>
+    <button class="main-btn" id="save">Сохранить</button>
+    <button class="del" id="delBtn">Удалить привычку</button>
+  </div>
+  <div class="dlg" id="dlg"><div class="box"><p id="dlgText"></p>
+    <div class="btns"><button id="dlgNo">Отмена</button><button id="dlgYes" class="red">Удалить</button></div></div></div>
+</div>
+
+<script>
+/* ---------- Telegram ---------- */
+const TG = window.Telegram && window.Telegram.WebApp;
+const inTG = !!(TG && TG.initData);
+const cloud = inTG && TG.CloudStorage && TG.isVersionAtLeast && TG.isVersionAtLeast("6.9") ? TG.CloudStorage : null;
+if (inTG) {
+  document.body.classList.add("tg");
+  TG.ready(); TG.expand();
+  try { TG.setHeaderColor("#0f0f10"); TG.setBackgroundColor("#0f0f10"); } catch(e){}
+}
+const haptic = t => { try { if (inTG) t==="ok" ? TG.HapticFeedback.notificationOccurred("success") : TG.HapticFeedback.impactOccurred("light"); } catch(e){} };
+let dlgCb = null;
+const ask = (msg, cb) => { if (inTG) return TG.showConfirm(msg, ok => ok && cb());
+  $("dlgText").textContent = msg; dlgCb = cb; $("dlg").classList.add("on"); };
+document.getElementById("dlgNo").onclick = () => document.getElementById("dlg").classList.remove("on");
+document.getElementById("dlgYes").onclick = () => { document.getElementById("dlg").classList.remove("on"); dlgCb && dlgCb(); };
+
+/* ---------- даты ---------- */
+const pad = n => String(n).padStart(2,"0");
+const key = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const addDays = (d,n) => { const x = new Date(d); x.setDate(x.getDate()+n); return x; };
+const today = () => { const d = new Date(); d.setHours(0,0,0,0); return d; };
+const plural = (n, a, b, c) => n%10==1 && n%100!=11 ? a : [2,3,4].includes(n%10) && ![12,13,14].includes(n%100) ? b : c;
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const $ = id => document.getElementById(id);
+
+/* ---------- данные ---------- */
+// habits: [{id, e, n, f:'d'|'wd'|'w3', t, created:'YYYY-MM-DD'}]
+// log: {'YYYY-MM-DD': [id, ...]}
+let habits = [], log = {}, sel = today();
+function loadLocal(){
+  try { habits = JSON.parse(localStorage.getItem("ht_habits")) || []; log = JSON.parse(localStorage.getItem("ht_log")) || {}; } catch(e){}
+}
+function saveLocal(){
+  try { localStorage.setItem("ht_habits", JSON.stringify(habits)); localStorage.setItem("ht_log", JSON.stringify(log)); } catch(e){}
+}
+function monthData(m){ const o = {}; for (const k in log) if (k.startsWith(m) && log[k].length) o[k.slice(8)] = log[k]; return JSON.stringify(o); }
+function saveCloud(month){
+  if (!cloud) return;
+  cloud.setItem("habits", JSON.stringify(habits));
+  if (month) cloud.setItem("m_"+month, monthData(month));
+}
+function save(month){ saveLocal(); saveCloud(month); syncServer(); }
+
+/* ---------- сервер напоминаний ---------- */
+const API = "https://habit-reminders.w-stetinger26.workers.dev";
+let syncTimer = null;
+function syncServer(){
+  if (!inTG || !API.startsWith("https://")) return;
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(() => {
+    const k = key(today());
+    fetch(API + "/api/sync", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ initData: TG.initData, tz: -new Date().getTimezoneOffset(), today: k,
+        habits: habits.map(h => ({ id: h.id, e: h.e, n: h.n, f: h.f, t: h.t })), doneToday: log[k] || [] }) }).catch(() => {});
+  }, 700);
+}
+function loadCloud(){
+  if (!cloud) return;
+  const keys = ["habits"]; let d = today(); d.setDate(1);
+  for (let i=0;i<12;i++){ keys.push("m_"+key(d).slice(0,7)); d.setMonth(d.getMonth()-1); }
+  cloud.getItems(keys, (err, v) => {
+    if (err || !v) return;
+    if (v.habits) {
+      try {
+        habits = JSON.parse(v.habits);
+        keys.slice(1).forEach(k => { if (!v[k]) return; const m = k.slice(2), o = JSON.parse(v[k]);
+          for (const day in o) log[m+"-"+day] = o[day]; });
+      } catch(e){}
+      saveLocal(); render(); syncServer();
+    } else if (habits.length) {              // первый запуск в Telegram — переносим локальные данные
+      const months = new Set(Object.keys(log).map(k => k.slice(0,7)));
+      cloud.setItem("habits", JSON.stringify(habits));
+      months.forEach(m => cloud.setItem("m_"+m, monthData(m)));
+    }
+  });
+}
+
+/* ---------- логика ---------- */
+const isDone = (h,k) => (log[k]||[]).includes(h.id);
+const sched = (h,d) => key(d) >= h.created && (h.f !== "wd" || (d.getDay()>=1 && d.getDay()<=5));
+function streak(h){
+  let d = today(), n = 0;
+  if (!isDone(h,key(d))) d = addDays(d,-1);
+  for (let i=0;i<1000;i++){
+    if (key(d) < h.created) break;
+    if (!sched(h,d)) { d = addDays(d,-1); continue; }
+    if (isDone(h,key(d))) { n++; d = addDays(d,-1); } else break;
+  }
+  return n;
+}
+function bestStreak(h){
+  let d = new Date(h.created.replace(/-/g,"/")), t = today(), run = 0, max = 0;
+  while (d <= t){ if (sched(h,d)) { if (isDone(h,key(d))) { run++; max = Math.max(max,run); } else if (key(d)!==key(t)) run = 0; } d = addDays(d,1); }
+  return max;
+}
+function weekCount(h){
+  const t = today(), mon = addDays(t, -((t.getDay()+6)%7)); let n = 0;
+  for (let d = mon; d <= t; d = addDays(d,1)) if (isDone(h,key(d))) n++;
+  return n;
+}
+const shownOn = d => habits.filter(h => sched(h,d));
+function dayStatus(d){
+  const hs = shownOn(d).filter(h => h.f !== "w3"); if (!hs.length) return "";
+  const n = hs.filter(h => isDone(h,key(d))).length;
+  return n === hs.length ? "full" : n ? "part" : "";
+}
+
+/* ---------- экран «Сегодня» ---------- */
+function render(){
+  const t = today(), k = key(sel), isToday = k === key(t);
+  const hr = new Date().getHours();
+  const name = inTG && TG.initDataUnsafe.user ? ", " + TG.initDataUnsafe.user.first_name : "";
+  $("hello").textContent = (hr<5 ? "Доброй ночи" : hr<12 ? "Доброе утро" : hr<18 ? "Добрый день" : "Добрый вечер") + name;
+  const ds = t.toLocaleDateString("ru-RU",{weekday:"long",day:"numeric",month:"long"});
+  $("date").textContent = ds[0].toUpperCase() + ds.slice(1);
+
+  const mon = addDays(t, -((t.getDay()+6)%7)), wn = ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"];
+  $("week").innerHTML = wn.map((w,i) => { const d = addDays(mon,i), dk = key(d);
+    const cls = dk > key(t) ? "future" : dayStatus(d);
+    return `<div class="day ${cls} ${dk===key(t)?"today":""} ${dk===k?"sel":""}" data-k="${dk}">${w}<b>${d.getDate()}</b><i></i></div>`; }).join("");
+
+  const list = shownOn(sel);
+  $("listTitle").textContent = isToday ? "Сегодня" : sel.toLocaleDateString("ru-RU",{day:"numeric",month:"long"});
+  if (!habits.length){
+    $("list").innerHTML = `<div class="empty"><div style="font-size:34px">🌱</div><b>Пока нет привычек</b>
+      <p>Начни с одной маленькой — или выбери готовую:</p><div class="chips" id="quick">
+      <span class="chip" data-q="🏃|Утренняя зарядка">🏃 Зарядка</span><span class="chip" data-q="💧|Вода 2 литра">💧 Вода</span>
+      <span class="chip" data-q="📖|Чтение 10 страниц">📖 Чтение</span><span class="chip" data-q="🚶|Прогулка 30 минут">🚶 Прогулка</span></div></div>`;
+  } else if (!list.length){
+    $("list").innerHTML = `<div class="empty"><b>В этот день привычек нет</b><p>Выходной 🙂</p></div>`;
+  } else {
+    $("list").innerHTML = list.map(h => {
+      const done = isDone(h,k);
+      const info = h.f === "w3" ? `${weekCount(h)} из 3 на этой неделе`
+        : (s => `<span class="fire">🔥 ${s}</span> ${plural(s,"день","дня","дней")} подряд`)(streak(h));
+      return `<div class="habit ${done?"done":""}"><div class="emo">${h.e}</div>
+        <div class="hb" data-edit="${h.id}"><b>${esc(h.n)}</b><small>${info}</small></div>
+        <button class="check" data-id="${h.id}">✓</button></div>`; }).join("");
+  }
+  const done = list.filter(h => isDone(h,k)).length, all = list.length;
+  $("pct").textContent = (all ? Math.round(done/all*100) : 0) + "%";
+  $("arc").style.strokeDashoffset = 226.2 * (1 - (all ? done/all : 0));
+  $("count").textContent = all ? `${done} из ${all}` : "";
+  $("heroText").innerHTML = !all ? "Добавь первую привычку —<br>и начнём отмечать дни."
+    : done === all ? "<b>Все привычки выполнены!</b><br>День засчитан, серия продолжается."
+    : `Выполнено <b>${done} из ${all}</b>.<br>${isToday ? `Осталось ${all-done} — ты справишься.` : "Можно отметить задним числом."}`;
+  renderStats(); renderProfile();
+}
+
+/* ---------- статистика ---------- */
+function renderStats(){
+  const t = today(), from = addDays(t,-29), ids = new Set(habits.map(h => h.id));
+  let sumDone = 0, sumExp = 0;
+  const bars = habits.map(h => {
+    let exp = 0, dn = 0, days = 0;
+    for (let d = new Date(from); d <= t; d = addDays(d,1)) { if (key(d) < h.created) continue; days++; if (sched(h,d)) exp++; if (isDone(h,key(d))) dn++; }
+    if (h.f === "w3") exp = Math.max(1, Math.round(days*3/7));
+    sumDone += Math.min(dn,exp); sumExp += exp;
+    const p = exp ? Math.min(100, Math.round(dn/exp*100)) : 0;
+    return {h,p};
+  }).sort((a,b) => b.p - a.p);
+  $("stPct").textContent = (sumExp ? Math.round(sumDone/sumExp*100) : 0) + "%";
+  $("stBest").textContent = habits.reduce((m,h) => h.f==="w3" ? m : Math.max(m, bestStreak(h)), 0);
+  $("stTotal").textContent = Object.values(log).reduce((s,a) => s + a.filter(id => ids.has(id)).length, 0);
+  $("stActive").textContent = habits.length;
+  $("bars").innerHTML = bars.length ? bars.map(({h,p}) =>
+    `<div class="bar"><span>${h.e} ${esc(h.n)}</span><div class="t"><i style="width:${p}%"></i></div><em>${p}%</em></div>`).join("")
+    : `<p class="sub">Здесь появится статистика по каждой привычке.</p>`;
+  const mon = addDays(t, -((t.getDay()+6)%7) - 28); let hm = "";
+  for (let i=0;i<35;i++){ const d = addDays(mon,i);
+    if (d > t) { hm += `<i class="fut"></i>`; continue; }
+    const hs = shownOn(d), n = hs.filter(h => isDone(h,key(d))).length, r = hs.length ? n/hs.length : 0;
+    hm += `<i class="${r>=1?"l3":r>=.5?"l2":r>0?"l1":""}" title="${key(d)}"></i>`; }
+  $("heat").innerHTML = hm;
+}
+
+/* ---------- профиль ---------- */
+function renderProfile(){
+  const u = inTG && TG.initDataUnsafe.user;
+  if (u){
+    $("pname").textContent = [u.first_name, u.last_name].filter(Boolean).join(" ");
+    $("psub").textContent = u.username ? "@"+u.username : "Telegram";
+    $("ava").innerHTML = u.photo_url ? `<img src="${u.photo_url}" alt="">` : esc(u.first_name[0]);
+  }
+  $("where").textContent = cloud ? "в облаке Telegram" : "в этом браузере";
+  const n = habits.filter(h => h.t).length;
+  $("remind").textContent = !inTG ? "только в Telegram" : n ? `включены (${n})` : "выключены";
+}
+
+/* ---------- окно привычки ---------- */
+const EMOS = ["💪","🏃","💧","📖","🧘","🚶","🥗","💤","✍️","🇮🇹","🙏","📵"];
+$("emos").innerHTML = EMOS.map(e => `<span class="chip" data-v="${e}">${e}</span>`).join("");
+let editing = null;
+const pick = (g,v) => $(g).querySelectorAll(".chip").forEach(c => c.classList.toggle("on", c.dataset.v === v));
+const picked = g => { const c = $(g).querySelector(".chip.on"); const v = c ? c.dataset.v : "";
+  return g === "time" && v === "custom" ? ($("tmCustom").value || "") : v; };
+const showCustom = () => { const c = $("time").querySelector(".chip.on"); $("tmCustom").hidden = !(c && c.dataset.v === "custom"); };
+document.querySelectorAll(".sheet .chips").forEach(g => g.onclick = ev => { const c = ev.target.closest(".chip"); if (c) { pick(g.id, c.dataset.v); showCustom(); } });
+
+function openSheet(h){
+  editing = h || null;
+  $("shTitle").textContent = h ? "Изменить привычку" : "Новая привычка";
+  $("nm").value = h ? h.n : "";
+  pick("emos", h ? h.e : EMOS[0]); pick("freq", h ? h.f : "d");
+  const t = h ? h.t : "08:00", preset = ["", "07:00", "08:00", "12:00", "20:00"].includes(t);
+  pick("time", preset ? t : "custom"); if (!preset) $("tmCustom").value = t; showCustom();
+  $("delBtn").style.display = h ? "" : "none";
+  $("phone").classList.add("open");
+  if (inTG) TG.BackButton.show();
+}
+function closeSheet(){ $("phone").classList.remove("open"); $("nm").blur(); if (inTG) TG.BackButton.hide(); }
+if (inTG) TG.BackButton.onClick(closeSheet);
+$("veil").onclick = closeSheet;
+$("addBtn").onclick = () => openSheet();
+$("save").onclick = () => {
+  const n = $("nm").value.trim();
+  if (!n) { $("nm").focus(); $("nm").style.borderColor = "var(--red)"; return; }
+  $("nm").style.borderColor = "";
+  const data = {e: picked("emos"), n, f: picked("freq") || "d", t: picked("time")};
+  if (editing) Object.assign(editing, data);
+  else habits.push({id: Date.now().toString(36), created: key(today()), ...data});
+  save(); closeSheet(); render(); haptic();
+  if (inTG && data.t && TG.requestWriteAccess) { try { TG.requestWriteAccess(); } catch(e){} }
+};
+$("delBtn").onclick = () => ask(`Удалить «${editing.n}»? Отметки этой привычки исчезнут из статистики.`, () => {
+  habits = habits.filter(h => h !== editing); save(); closeSheet(); render();
+});
+
+/* ---------- клики ---------- */
+$("list").onclick = ev => {
+  const c = ev.target.closest(".check"), e = ev.target.closest("[data-edit]"), q = ev.target.closest("[data-q]");
+  if (q){ const [em, n] = q.dataset.q.split("|"); habits.push({id: Date.now().toString(36), created: key(today()), e: em, n, f: "d", t: ""}); save(); render(); return; }
+  if (e){ openSheet(habits.find(h => h.id === e.dataset.edit)); return; }
+  if (!c) return;
+  const k = key(sel), arr = log[k] || (log[k] = []), i = arr.indexOf(c.dataset.id);
+  i >= 0 ? arr.splice(i,1) : arr.push(c.dataset.id);
+  if (!arr.length) delete log[k];
+  save(k.slice(0,7)); render();
+  const list = shownOn(sel);
+  list.length && list.every(h => isDone(h,k)) ? haptic("ok") : haptic();
+};
+$("week").onclick = ev => { const d = ev.target.closest(".day"); if (!d || d.classList.contains("future")) return;
+  sel = new Date(d.dataset.k.replace(/-/g,"/")); render(); };
+document.querySelectorAll(".tab").forEach(t => t.onclick = () => {
+  document.querySelectorAll(".tab").forEach(x => x.classList.toggle("on", x === t));
+  document.querySelectorAll(".screen").forEach(s => s.classList.toggle("on", s.id === t.dataset.s));
+  $("addBtn").style.display = t.dataset.s === "s-profile" ? "none" : "";
+});
+$("reset").onclick = () => ask("Удалить все привычки и отметки? Это нельзя отменить.", () => {
+  const months = new Set(Object.keys(log).map(k => k.slice(0,7)));
+  habits = []; log = {}; saveLocal();
+  if (cloud) { cloud.setItem("habits","[]"); months.forEach(m => cloud.removeItem("m_"+m)); }
+  syncServer(); render();
+});
+// новый день, пока приложение открыто
+document.addEventListener("visibilitychange", () => { if (!document.hidden) { if (key(sel) > key(today())) sel = today(); render(); } });
+
+/* ---------- пример для показа в браузере (в Telegram не включается) ---------- */
+let demo = false;
+function seedDemo(){
+  const t = today(), start = key(addDays(t,-40));
+  habits = [
+    {id:"a",e:"🏃",n:"Утренняя зарядка",f:"d",t:"07:00",created:start},
+    {id:"b",e:"💧",n:"Вода 2 литра",f:"d",t:"08:00",created:start},
+    {id:"c",e:"📖",n:"Чтение 10 страниц",f:"d",t:"20:00",created:start},
+    {id:"d",e:"🧘",n:"Медитация 5 минут",f:"wd",t:"07:00",created:start},
+    {id:"e",e:"🚶",n:"Прогулка 30 минут",f:"w3",t:"",created:start},
+  ];
+  log = {}; const rate = {a:.9,b:.95,c:.8,d:.75,e:.5}; let s = 7;
+  const rnd = () => (s = (s*9301+49297) % 233280) / 233280;
+  for (let i=40;i>=1;i--){ const d = addDays(t,-i), k = key(d);
+    const ids = habits.filter(h => sched(h,d) && (i<=12 && h.id!=="e" ? true : rnd() < rate[h.id])).map(h => h.id);
+    if (ids.length) log[k] = ids; }
+  log[key(t)] = ["a","b"];
+  demo = true;
+}
+$("demoClear").onclick = () => { habits = []; log = {}; demo = false; saveLocal(); $("demoBar").hidden = true; render(); };
+
+loadLocal();
+if (!inTG && !habits.length) seedDemo();
+$("demoBar").hidden = !demo;
+render(); loadCloud(); if (!cloud) syncServer();
+</script>
+</body>
+</html>
